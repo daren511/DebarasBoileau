@@ -179,6 +179,7 @@ public class Inscription extends HttpServlet {
                
                 PreparedStatement stmins =
                         oradb.getConnexion().prepareStatement(sqlins);
+              
                 
                 //Affectation
                 stmins.setString(1,username);
