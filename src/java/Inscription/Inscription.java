@@ -44,6 +44,7 @@ public class Inscription extends HttpServlet {
             ecrireTete(out,"Inscription");
             out.println("<body>");
             out.println("<div class=\"Inscription\">");
+            out.println("<a href='Magasin/Catalogue'><img src='Images/titre.png' height='115' width='420'/></a>");
             out.println("<p id=\"Form\"><strong><u>Inscription</u></strong> <br/> </p>");
             out.println("<form action=\"Inscription\" method=\"POST\">");
             out.println("<table id=\"T_Inscription\">");
@@ -57,6 +58,42 @@ public class Inscription extends HttpServlet {
             out.println("<tr><td> Prénom : </td><td> <input id=\"firstname\" type=\"text\" class=\"Text_Box\" name=\"Prenom\" /> </td></tr>");
             
             out.println("<tr><td colspan=\"2\"> <button id=\"btninscription\" type=\"submit\" class=\"BTN_Inscrire\">S'inscrire</button> </td></tr>");
+            
+            out.println("</table>");
+            out.println("</form>");
+            out.println("</div>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+    protected void processRequestAfterInsert(HttpServletRequest request, HttpServletResponse response, String etat, String texte)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            ecrireTete(out,"Inscription");
+            out.println("<body>");
+            out.println("<div class=\"Inscription\">");
+            out.println("<a href='Magasin/Catalogue'><img src='Images/titre.png' height='115' width='420'/></a>");
+            out.println("<p id=\"Form\"><strong><u>Inscription</u></strong> <br/> </p>");
+            out.println("<form action=\"Inscription\" method=\"POST\">");
+            out.println("<table id=\"T_Inscription\">");
+            
+            out.println("<tr><td> Nom d'usager : </td><td> <input id=\"Username\" type=\"text\" class=\"Text_Box\" name=\"User\" /> </td></tr>");
+            
+            out.println("<tr><td> Mot de passe : </td><td> <input id=\"Password\" type=\"password\" class=\"Text_Box\" name=\"Password\" /> </td></tr>");
+            
+            out.println("<tr><td> Nom : </td><td> <input id=\"Name\" type=\"text\" class=\"Text_Box\" name=\"Nom\" /> </td></tr>");
+            
+            out.println("<tr><td> Prénom : </td><td> <input id=\"firstname\" type=\"text\" class=\"Text_Box\" name=\"Prenom\" /> </td></tr>");
+            
+            out.println("<tr><td colspan=\"2\"> <button id=\"btninscription\" type=\"submit\" class=\"BTN_Inscrire\">S'inscrire</button> </td></tr>");
+      
+            out.println("<tr><td class='"+etat+"' colspan='2'>"+texte+"</td></tr>");       
+            
+            
             
             out.println("</table>");
             out.println("</form>");
@@ -120,6 +157,11 @@ public class Inscription extends HttpServlet {
         //Flux ecriture
         PrintWriter out = response.getWriter();
         
+        String etatB ="bon";
+        String etatM ="mauvais";
+        String textB ="Le compte "+username+" à été crée avec succès";
+        String textM ="Erreur,veuillez remplir tout les champs";
+        
         try
         {
             // Write Head
@@ -134,6 +176,7 @@ public class Inscription extends HttpServlet {
             
             try
             {
+               
                 PreparedStatement stmins =
                         oradb.getConnexion().prepareStatement(sqlins);
                 
@@ -145,10 +188,13 @@ public class Inscription extends HttpServlet {
                 stmins.setInt(5, nombreecus);
                 stmins.executeUpdate();
                 stmins.close();
+                processRequestAfterInsert(request, response, etatB, textB);
+                
             }
             catch(SQLException se)
             {
                 System.err.println(se.getMessage());
+                processRequestAfterInsert(request, response, etatM, textM);
             }
             
         }
