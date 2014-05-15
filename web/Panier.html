@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Panier</title>
+        <link rel="stylesheet" type="text/css" href="WebApp.css">
+    </head>
+
+    <body>
+      <div class="Catalogue">
+         <form id="ConnUser">
+         <table>
+            <tr>
+            <br>
+            <tr><td> Nombre d'écus: </td></tr>
+            <tr><td><button id="btndeconnexion" type="submit" class="BTN_Deconnexion">Se deconnecter</button></td></tr>
+            </tr>
+         </table>
+         </form>
+         <div class="CB"> 
+                      <div>
+                         <select>
+                           <option value="Tous">Tous</option>
+                           <option value="Armes">Armes</option>
+                           <option value="Armures">Armures</option>
+                           <option value="Potions">Potions</option>
+                           <option value="Habilités">Habilites</option>
+                         </select>
+                           <button id="btnfiltrer" type="submit" class="BTN_Filtrer">Filtrer Inventaire</button>
+                      </div>
+         </div>
+         <div class="Liste">
+            <table id="ObjectList">
+               <tr>
+               <th>Nom d'item</th>
+               <th>Genre</th>
+               <th>Prix</th>
+               <th>Quantité disponible</th>
+               </tr>
+            </table>
+         </div>
+         
+         
+         
+         </div>
+      </div>
+    </body>
+</html>
