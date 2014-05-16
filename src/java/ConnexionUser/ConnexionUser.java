@@ -6,17 +6,18 @@
 
 package ConnexionUser;
 
+import Inscription.ConnectionOracle;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import oracle.jdbc.*;
 import oracle.jdbc.pool.*;
-import java.sql.*;
-import Inscription.ConnectionOracle;
 
 /**
  *
@@ -24,6 +25,9 @@ import Inscription.ConnectionOracle;
  */
 @WebServlet(name = "ConnexionUser", urlPatterns = {"/ConnexionUser"})
 public class ConnexionUser extends HttpServlet {
+   private String nomUser;
+   private String motDePasse;
+   private HttpSession session;
 
    /**
     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,6 +40,7 @@ public class ConnexionUser extends HttpServlet {
     */
    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
+      session = request.getSession();
       response.setContentType("text/html;charset=UTF-8");
       try (PrintWriter out = response.getWriter()) {
          /* TODO output your page here. You may use following sample code. */
@@ -87,6 +92,9 @@ public class ConnexionUser extends HttpServlet {
    protected void processRequestUserConnecter(HttpServletRequest request, HttpServletResponse response,String Username ,String Ecus)
            throws ServletException, IOException {
       response.setContentType("text/html;charset=UTF-8");
+      session = request.getSession();
+      nomUser = (String)session.getAttribute("Username");
+             
       try (PrintWriter out = response.getWriter()) {
          /* TODO output your page here. You may use following sample code. */
          out.println("<!DOCTYPE html>");
@@ -160,6 +168,35 @@ public class ConnexionUser extends HttpServlet {
         }
         catch(SQLException sqlex){ System.out.println(sqlex);}
 }
+private boolean validerConnexion(String nom , String mdp){
+
+            boolean siValide = false;
+            // Sql
+            String sqljoueurs = "Select NomUsager,MotDePasse,EcusJoueurs from Joueurs where NomUsager = '" +nom+ "' and MotDePasse ='"+ mdp + "'";
+            //Connexion
+            ConnectionOracle oradb = new ConnectionOracle();
+            oradb.connecter();
+
+           try
+           {
+            Statement stm = oradb.getConnexion().createStatement();
+            ResultSet rest = stm.executeQuery(sqljoueurs);
+            
+            if(rest.first())
+            {
+               siValide = true;
+            }
+            rest.close();
+            stm.close();
+            oradb.deconnecter();
+           }
+           catch(SQLException se)
+           {
+              System.err.println(se.getMessage());
+           }
+           return siValide;
+}
+
 
    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
    /**
@@ -188,9 +225,12 @@ public class ConnexionUser extends HttpServlet {
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
+           
+           
+           session = request.getSession();
            // Recup des params
-           String username = request.getParameter("User");
-           String password = request.getParameter("Password");
+           nomUser = request.getParameter("User");
+           motDePasse = request.getParameter("Password");
            
            //avertit le navigateur qu'il va recevoir du code HTML
            response.setContentType("text/html;charset=UTF-8");
@@ -201,33 +241,17 @@ public class ConnexionUser extends HttpServlet {
            //Connexion
             ConnectionOracle oradb = new ConnectionOracle();
             oradb.connecter();
-            // Sql
-            String sqljoueurs = "Select NomUsager,MotDePasse,EcusJoueurs from Joueurs where NomUsager = '" +username+ "' and MotDePasse ='"+ password + "'";
-
-           
-           try
-           {
-            Statement stm = oradb.getConnexion().createStatement();
-            ResultSet rest = stm.executeQuery(sqljoueurs);
             
-            while(rest.first())
-            {
-               String usernameConn  = rest.getString(1);
-               String ecusConn = rest.getString(3);
-               processRequestUserConnecter(request, response,usernameConn, ecusConn);
-            }
-              
-           }
-           catch(SQLException se)
+           if(validerConnexion(nomUser, motDePasse))
            {
-              System.err.println(se.getMessage());
-              processRequest(request, response);
-              
+              session.setAttribute("User", nomUser);
+              response.sendRedirect("http://localhost:8084/DebarasBoileau/Catalogue");
            }
-           finally
-        {
-            out.close();
-        }
+           else
+           {
+              out.println("Erreur,l'un des champs est erroné"); // a regler
+              response.sendRedirect("http://localhost:8084/DebarasBoileau/Catalogue");
+           }
    }
 
    /**

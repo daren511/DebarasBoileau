@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import oracle.jdbc.*;
 import oracle.jdbc.pool.*;
 import java.sql.*;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -24,7 +25,7 @@ import java.sql.*;
  */
 @WebServlet(name = "Catalogue", urlPatterns = {"/Catalogue"})
 public class Catalogue extends HttpServlet {
-
+   private HttpSession session;
    /**
     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
     * methods.
