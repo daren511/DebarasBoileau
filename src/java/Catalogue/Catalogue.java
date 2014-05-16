@@ -44,8 +44,8 @@ public class Catalogue extends HttpServlet {
          ecrireTete(out,"Catalogue");
          out.println("<body>");
          out.println("<div class=\"Catalogue\">");
-         out.println("<div class=\"connexion\">");
          out.println("<img src='Images/titre1.png' height='124' width='573'/></a>");
+         out.println("<div class=\"connexion\">");
          out.println("<form action=\"ConnexionUser\" method=\"POST\">");
          out.println("<table>");
          out.println("<tr><td> Nom d'usager : </td><td> <input id=\"Username\" type=\"text\" class=\"Text_Box\" name=\"User\" /> </td></tr>");
