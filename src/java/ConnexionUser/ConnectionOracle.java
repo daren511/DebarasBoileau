@@ -4,13 +4,12 @@
  * and open the template in the editor.
  */
 
-package Catalogue;
+package ConnexionUser;
 
 /**
  *
  * @author 201093812
  */
-import ConnexionUser.*;
 import Inscription.*;
 import java.sql.Connection;
 import java.sql.SQLException;
