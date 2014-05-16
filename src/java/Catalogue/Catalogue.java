@@ -104,8 +104,8 @@ public class Catalogue extends HttpServlet {
          out.println("</br>");
          out.println("</form>");
          out.println("</div>");
-         out.println("<form class=\"CB\" action=\"ConnexionUser\" method=\"POST\">");
          out.println("<div>");
+         out.println("<form class=\"CB\" action=\"Catalogue\" method=\"POST\">");
          out.println("<select name='Genre'>");
          out.println("<option value=\"Tous\">Tous</option>");
          out.println("<option value=\"Armes\">Armes</option>");
@@ -114,8 +114,8 @@ public class Catalogue extends HttpServlet {
          out.println("<option value=\"Habilites\">Habilites</option>");
          out.println("</select>");
          out.println("<button id=\"btnfiltrer\" type=\"submit\" class=\"BTN_Filtrer\">Filtrer Inventaire</button>");
-         out.println("</div>");
          out.println("</form>");
+         out.println("</div>");
          out.println("<div class='Liste'>");
          out.println("<table id='ObjectList'>");
          out.println("<tr>");
