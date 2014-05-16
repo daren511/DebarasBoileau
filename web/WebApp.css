@@ -51,6 +51,26 @@ table#T_Inscription
 }
 
 /* Catalogue.html*/
+
+div.connexion
+{  
+    position: absolute;
+    left: 70%;
+    top:5%;
+}
+
+div.Liste
+{
+   position:absolute;
+   top:24%;
+}
+
+form.CB
+{
+   position:absolute;
+   top:21%;
+}
+
 div.Catalogue
 {
    background-color:white;
@@ -62,6 +82,11 @@ div.Catalogue
    width:1200px;
    border-radius:25px;
    background-color:rgba(255,255,255,0.8);
+}
+
+#btnconnexion
+{
+   border-radius:25px;
 }
 
 form#ConnUser
@@ -77,13 +102,29 @@ form#FiltreItem
 }
 table#ObjectList tr th
 {
- border:2px solid black;
- border-spacing: 0;
- border-collapse: collapse;
+    width:200px;
+    height:1%;
+    font-size:22px;
+    border:2px solid black;
+    border-spacing: 0;
+    border-collapse: collapse;
 }
 
-img>div{
+table#ObjectList tr td
+{
+    font-size:16px;
     text-align:center;
+    border:2px solid black;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+img
+{
+    position:absolute;
+    top:2%;
+    text-align:center;
+    left:15%;
 }
 
 
