@@ -48,7 +48,7 @@ public class Catalogue extends HttpServlet {
          out.println("<table>");
          out.println("<tr><td> Nom d'usager : </td><td> <input id=\"Username\" type=\"text\" class=\"Text_Box\" name=\"User\" /> </td></tr>");
          out.println("<tr><td> Mot de passe : </td><td> <input id=\"Password\" type=\"password\" class=\"Text_Box\" name=\"Password\" /> </td></tr>");
-         out.println("<tr><button id=\"btnconnexion\" type=\"submit\" class=\"BTN_Inscrire\">Se connecter</button></td></tr>");
+         out.println("<tr><button id=\"btnconnexion\" type=\"submit\" class=\"BTN_Connexion\">Se connecter</button></td></tr>");
          out.println("</table>");
          out.println("</br>");
          out.println("</form>");
@@ -95,7 +95,7 @@ public class Catalogue extends HttpServlet {
          out.println("<table>");
          out.println("<tr><td> Nom d'usager : </td><td> <input id=\"Username\" type=\"text\" class=\"Text_Box\" name=\"User\" /> </td></tr>");
          out.println("<tr><td> Mot de passe : </td><td> <input id=\"Password\" type=\"password\" class=\"Text_Box\" name=\"Password\" /> </td></tr>");
-         out.println("<tr><td><button id=\"btnconnexion\" type=\"submit\" class=\"BTN_Inscrire\">Se connecter</button></td></tr>");
+         out.println("<tr><td><button id=\"btnconnexion\" type=\"submit\" class=\"BTN_Connexion\">Se connecter</button></td></tr>");
          out.println("</table>");
          out.println("</br>");
          out.println("</form>");
@@ -106,7 +106,7 @@ public class Catalogue extends HttpServlet {
          out.println("<option value=\"Armes\">Armes</option>");
          out.println("<option value=\"Armures\">Armures</option>");
          out.println("<option value=\"Potions\">Potions</option>");
-         out.println("<option value=\"Habilités\">Habilites</option>");
+         out.println("<option value=\"Habilites\">Habilites</option>");
          out.println("</select>");
          out.println("<button id=\"btnfiltrer\" type=\"submit\" class=\"BTN_Filtrer\">Filtrer Inventaire</button>");
          out.println("</div>");
@@ -218,15 +218,13 @@ public class Catalogue extends HttpServlet {
             PrintWriter out = response.getWriter();
            try
            {
-            if(genre == "Tous")
+            if(genre.equals("Tous"))
            {
-              processRequestTous(request, response);
-              
+              processRequestTous(request, response); 
            }
-            else{
-               
+            else
+            {
                processRequestGenre(request, response, genre);
-
             }
            }
            finally
