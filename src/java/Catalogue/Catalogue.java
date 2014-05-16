@@ -95,7 +95,7 @@ public class Catalogue extends HttpServlet {
          out.println("<table>");
          out.println("<tr><td> Nom d'usager : </td><td> <input id=\"Username\" type=\"text\" class=\"Text_Box\" name=\"User\" /> </td></tr>");
          out.println("<tr><td> Mot de passe : </td><td> <input id=\"Password\" type=\"password\" class=\"Text_Box\" name=\"Password\" /> </td></tr>");
-         out.println("<tr><button id=\"btnconnexion\" type=\"submit\" class=\"BTN_Inscrire\">Se connecter</button></td></tr>");
+         out.println("<tr><td><button id=\"btnconnexion\" type=\"submit\" class=\"BTN_Inscrire\">Se connecter</button></td></tr>");
          out.println("</table>");
          out.println("</br>");
          out.println("</form>");
