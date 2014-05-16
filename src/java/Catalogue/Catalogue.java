@@ -46,14 +46,16 @@ public class Catalogue extends HttpServlet {
          out.println("<body>");
          out.println("<div class=\"Catalogue\">");
          out.println("<img src='Images/titre1.png' height='124' width='573'/></a>");
+         out.println("<div class=\"connexion\">");
          out.println("<form action=\"ConnexionUser\" method=\"POST\">");
          out.println("<table>");
          out.println("<tr><td> Nom d'usager : </td><td> <input id=\"Username\" type=\"text\" class=\"Text_Box\" name=\"User\" /> </td></tr>");
          out.println("<tr><td> Mot de passe : </td><td> <input id=\"Password\" type=\"password\" class=\"Text_Box\" name=\"Password\" /> </td></tr>");
-         out.println("<tr><button id=\"btnconnexion\" type=\"submit\" class=\"BTN_Connexion\">Se connecter</button></td></tr>");
+         out.println("<tr><td><button id=\"btnconnexion\" type=\"submit\" class=\"BTN_Connexion\">Se connecter</button></td></tr>");
          out.println("</table>");
          out.println("</br>");
          out.println("</form>");
+         out.println("</div>");
          out.println("<form class=\"CB\" action=\"Catalogue\" method=\"POST\">");
          out.println("<div>");
          out.println("<select name=\"Genre\">");
@@ -93,7 +95,8 @@ public class Catalogue extends HttpServlet {
          out.println("<body>");
          out.println("<div class=\"Catalogue\">");
          out.println("<img src='Images/titre1.png' height='124' width='573'/></a>");
-         out.println("<form action=\"Catalogue\" method=\"POST\">");
+         out.println("<div class=\"connexion\">");
+         out.println("<form action=\"ConnexionUser\" method=\"POST\">");
          out.println("<table>");
          out.println("<tr><td> Nom d'usager : </td><td> <input id=\"Username\" type=\"text\" class=\"Text_Box\" name=\"User\" /> </td></tr>");
          out.println("<tr><td> Mot de passe : </td><td> <input id=\"Password\" type=\"password\" class=\"Text_Box\" name=\"Password\" /> </td></tr>");
@@ -101,8 +104,9 @@ public class Catalogue extends HttpServlet {
          out.println("</table>");
          out.println("</br>");
          out.println("</form>");
-         out.println("<form class=\"CB\" action=\"ConnexionUser\" method=\"POST\">");
+         out.println("</div>");
          out.println("<div>");
+         out.println("<form class=\"CB\" action=\"Catalogue\" method=\"POST\">");
          out.println("<select name='Genre'>");
          out.println("<option value=\"Tous\">Tous</option>");
          out.println("<option value=\"Armes\">Armes</option>");
@@ -111,8 +115,8 @@ public class Catalogue extends HttpServlet {
          out.println("<option value=\"Habilites\">Habilites</option>");
          out.println("</select>");
          out.println("<button id=\"btnfiltrer\" type=\"submit\" class=\"BTN_Filtrer\">Filtrer Inventaire</button>");
-         out.println("</div>");
          out.println("</form>");
+         out.println("</div>");
          out.println("<div class='Liste'>");
          out.println("<table id='ObjectList'>");
          out.println("<tr>");
@@ -154,7 +158,7 @@ public class Catalogue extends HttpServlet {
             while (rstTous.next())
             {
                out.println("<tr><td>"+rstTous.getString(2).toString()+"<td>"+rstTous.getString(3).toString()+"<td>"+rstTous.getString(4).toString()+"<td>"
-                       +"<td>"+rstTous.getString(5).toString());
+                       + rstTous.getString(5).toString());
             }
         }
         catch(SQLException sqlex){ System.out.println(sqlex);}
@@ -177,7 +181,7 @@ public class Catalogue extends HttpServlet {
             while (rstItems.next())
             {
                out.println("<tr><td>"+rstItems.getString(2).toString()+"<td>"+rstItems.getString(5).toString()+"<td>"+rstItems.getString(3).toString()+"<td>"
-                       +"<td>"+rstItems.getString(4).toString());
+                       + rstItems.getString(4).toString());
             }
         }
         catch(SQLException sqlex){ System.out.println(sqlex);}
