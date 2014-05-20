@@ -27,6 +27,7 @@ import oracle.jdbc.pool.*;
 public class ConnexionUser extends HttpServlet {
    private String nomUser;
    private String motDePasse;
+   private String ecus;
    private HttpSession session;
 
    /**
@@ -42,133 +43,9 @@ public class ConnexionUser extends HttpServlet {
            throws ServletException, IOException {
       session = request.getSession();
       response.setContentType("text/html;charset=UTF-8");
-      try (PrintWriter out = response.getWriter()) {
-         /* TODO output your page here. You may use following sample code. */
-         out.println("<!DOCTYPE html>");
-         out.println("<html>");
-         ecrireTete(out,"Catalogue");
-         out.println("<body>");
-         out.println("<div class=\"Catalogue\">");
-         out.println("<img src='Images/titre1.png' height='124' width='573'/></a>");
-         out.println("<form action=\"C\" method=\"POST\">");
-         out.println("<table>");
-         out.println("<tr><td> Nom d'usager : </td><td> <input id=\"Username\" type=\"text\" class=\"Text_Box\" name=\"User\" /> </td></tr>");
-         out.println("<tr><td> Mot de passe : </td><td> <input id=\"Password\" type=\"password\" class=\"Text_Box\" name=\"Password\" /> </td></tr>");
-         out.println("<tr><button id=\"btnconnexion\" type=\"submit\" class=\"BTN_Connexion\">Se connecter</button></td></tr>");
-         out.println("</table>");
-         out.println("</br>");
-         out.println("</form>");
-         out.println("<form class=\"CB\" action=\"Catalogue\" method=\"POST\">");
-         out.println("<div>");
-         out.println("<select name=\"Genre\">");
-         out.println("<option value='Tous'>Tous</option>");
-         out.println("<option value='Armes'>Armes</option>");
-         out.println("<option value='Armures'>Armures</option>");
-         out.println("<option value='Potions'>Potions</option>");
-         out.println("<option value='Habilités'>Habilites</option>");
-         out.println("</select>");
-         out.println("<button id='btnfiltrer' type=\"submit\" class='BTN_Filtrer'>Filtrer Inventaire</button>");
-         out.println("</div>");
-         out.println("</form>");
-         out.println("<div class='Liste'>");
-         out.println("<table id='ObjectList'>");
-         out.println("<tr>");
-         out.println("<th>Nom d'item</th>");
-         out.println("<th>Genre</th>");
-         out.println("<th>Prix</th>");
-         out.println("<th>Quantité disponible</th>");
-         out.println("</tr>");
-         listerTous(out);
-         out.println("</table>");
-         out.println("</div>");
-         out.println("</div>");
-         out.println("</body>");
-         out.println("</html>");
-         
-         
-      }
+      
    }
-   
-   protected void processRequestUserConnecter(HttpServletRequest request, HttpServletResponse response,String Username ,String Ecus)
-           throws ServletException, IOException {
-      response.setContentType("text/html;charset=UTF-8");
-      session = request.getSession();
-      nomUser = (String)session.getAttribute("Username");
-             
-      try (PrintWriter out = response.getWriter()) {
-         /* TODO output your page here. You may use following sample code. */
-         out.println("<!DOCTYPE html>");
-         out.println("<html>");
-         ecrireTete(out,"Catalogue");
-         out.println("<body>");
-         out.println("<div class=\"Catalogue\">");
-         out.println("<img src='Images/titre1.png' height='124' width='573'/></a>");
-         out.println("<form action=\"C\" method=\"POST\">");
-         out.println("<table>");
-         out.println("<tr><td> Bienvenue à vous "+Username +" Nombre d'écus :"+ Ecus +" /> </td></tr>");
-         out.println("</table>");
-         out.println("</br>");
-         out.println("</form>");
-         out.println("<form class=\"CB\" action=\"Catalogue\" method=\"POST\">");
-         out.println("<div>");
-         out.println("<select name=\"Genre\">");
-         out.println("<option value='Tous'>Tous</option>");
-         out.println("<option value='Armes'>Armes</option>");
-         out.println("<option value='Armures'>Armures</option>");
-         out.println("<option value='Potions'>Potions</option>");
-         out.println("<option value='Habilités'>Habilites</option>");
-         out.println("</select>");
-         out.println("<button id='btnfiltrer' type=\"submit\" class='BTN_Filtrer'>Filtrer Inventaire</button>");
-         out.println("</div>");
-         out.println("</form>");
-         out.println("<div class='Liste'>");
-         out.println("<table id='ObjectList'>");
-         out.println("<tr>");
-         out.println("<th>Nom d'item</th>");
-         out.println("<th>Genre</th>");
-         out.println("<th>Prix</th>");
-         out.println("<th>Quantité disponible</th>");
-         out.println("</tr>");
-         listerTous(out);
-         out.println("</table>");
-         out.println("</div>");
-         out.println("</div>");
-         out.println("</body>");
-         out.println("</html>");
-         
-         
-      }
-   }
-   private void ecrireTete(PrintWriter writer, String Titre){
-        writer.println("<head>");
-        writer.println("<meta charset=\"utf-8\" />");
-        writer.println("<title>"+Titre+"</title>");
-        writer.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"WebApp.css\">");
-        writer.println("</head>");
-   }
-   protected void listerTous(PrintWriter out){
-        
-      try
-        {
-           //Connexion DB
-           ConnectionOracle oradb = new ConnectionOracle();
-           oradb.connecter();
-           // Déclaration
-           String sqltous = "select * from items";
-           ResultSet rstTous;
-           // Lister les items
-            Statement stm1 = oradb.getConnexion().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            rstTous = stm1.executeQuery(sqltous);
-            
-            while (rstTous.next())
-            {
-               out.println("<tr><td>"+rstTous.getString(2).toString()+"<td>"+rstTous.getString(3).toString()+"<td>"+rstTous.getString(4).toString()+"<td>"
-                       +"<td>"+rstTous.getString(5).toString());
-            }
-        }
-        catch(SQLException sqlex){ System.out.println(sqlex);}
-}
-private boolean validerConnexion(String nom , String mdp){
+   private boolean validerConnexion(String nom , String mdp){
 
             boolean siValide = false;
             // Sql
@@ -179,12 +56,13 @@ private boolean validerConnexion(String nom , String mdp){
 
            try
            {
-            Statement stm = oradb.getConnexion().createStatement();
+            Statement stm = oradb.getConnexion().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
             ResultSet rest = stm.executeQuery(sqljoueurs);
             
             if(rest.first())
             {
                siValide = true;
+               ecus=Integer.toString(rest.getInt(3));
             }
             rest.close();
             stm.close();
@@ -195,6 +73,11 @@ private boolean validerConnexion(String nom , String mdp){
               System.err.println(se.getMessage());
            }
            return siValide;
+}
+private void writeConnexionTB(PrintWriter out){
+         out.println("<tr><td> Nom d'usager : </td><td> <input id=\"Username\" type=\"text\" class=\"Text_Box\" name=\"User\" /> </td></tr>");
+         out.println("<tr><td> Mot de passe : </td><td> <input id=\"Password\" type=\"password\" class=\"Text_Box\" name=\"Password\" /> </td></tr>");
+         out.println("<tr><button id=\"btnconnexion\" type=\"submit\" class=\"BTN_Connexion\">Se connecter</button></td></tr>");
 }
 
 
@@ -245,6 +128,7 @@ private boolean validerConnexion(String nom , String mdp){
            if(validerConnexion(nomUser, motDePasse))
            {
               session.setAttribute("User", nomUser);
+              session.setAttribute("Ecus", ecus);
               response.sendRedirect("http://localhost:8084/DebarasBoileau/Catalogue");
            }
            else
@@ -252,6 +136,7 @@ private boolean validerConnexion(String nom , String mdp){
               out.println("Erreur,l'un des champs est erroné"); // a regler
               response.sendRedirect("http://localhost:8084/DebarasBoileau/Catalogue");
            }
+           
    }
 
    /**

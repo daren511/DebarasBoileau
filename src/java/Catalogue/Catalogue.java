@@ -39,6 +39,8 @@ public class Catalogue extends HttpServlet {
            throws ServletException, IOException {
       response.setContentType("text/html;charset=UTF-8");
       try (PrintWriter out = response.getWriter()) {
+         session = request.getSession();
+
          /* TODO output your page here. You may use following sample code. */
          out.println("<!DOCTYPE html>");
          out.println("<html>");
@@ -47,7 +49,15 @@ public class Catalogue extends HttpServlet {
          out.println("<div class=\"Catalogue\">");
          out.println("<img src='Images/titre1.png' height='124' width='573'/></a>");
          out.println("<div class=\"connexion\">");
-         out.println("<form action=\"ConnexionUser\" method=\"POST\">");
+         if( session.getAttribute("User") == null)
+         {
+            out.println("<form action=\"ConnexionUser\" method=\"POST\">");
+           
+         }
+         else
+         {
+            out.println("<form action=\"logout\" method=\"POST\">");
+         }
          out.println("<table>");
          ecrireConn(out, session, request);
          out.println("</table>");
@@ -73,7 +83,10 @@ public class Catalogue extends HttpServlet {
          out.println("<th>Genre</th>");
          out.println("<th>Prix</th>");
          out.println("<th>Quantité disponible</th>");
-         out.println("<th></th>");
+         if( session.getAttribute("User") != null)
+            {
+               out.println("<th></th>");
+            }
          out.println("</tr>");
          listerTous(out);
          out.println("</table>");
@@ -87,6 +100,7 @@ public class Catalogue extends HttpServlet {
            throws ServletException, IOException {
       response.setContentType("text/html;charset=UTF-8");
       try (PrintWriter out = response.getWriter()) {
+         session = request.getSession();
          /* TODO output your page here. You may use following sample code. */
          out.println("<!DOCTYPE html>");
          out.println("<html>");
@@ -95,7 +109,18 @@ public class Catalogue extends HttpServlet {
          out.println("<div class=\"Catalogue\">");
          out.println("<img src='Images/titre1.png' height='124' width='573'/></a>");
          out.println("<div class=\"connexion\">");
-         out.println("<form action=\"ConnexionUser\" method=\"POST\">");
+         if( session.getAttribute("User") == null)
+         {
+            out.println("<form action=\"ConnexionUser\" method=\"POST\">");
+            //out.println("<form class=\"Inscription\" action=\"Inscription\" method=\"POST\">");
+            //out.println("<button id=\"btnInscription\" type=\"submit\" class=\"BTN_Inscription\">Inscription</button>");
+            //out.println("</form>");
+         }
+         else
+         {
+            out.println("<form action=\"logout\" method=\"POST\">");
+            //out.println("<button id=\"btnpanier\" type=\"submit\" class=\"BTN_Panier\">Panier</button>");
+         }
          out.println("<table>");
          ecrireConn(out, session, request);
          out.println("</table>");
@@ -121,7 +146,10 @@ public class Catalogue extends HttpServlet {
          out.println("<th>Genre</th>");
          out.println("<th>Prix</th>");
          out.println("<th>Quantité disponible</th>");
-         out.println("<th></th>");
+         if( session.getAttribute("User") != null)
+            {
+               out.println("<th></th>");
+            }
          out.println("</tr>");
          listerParGenre(genre, out);
          out.println("</table>");
@@ -141,7 +169,7 @@ public class Catalogue extends HttpServlet {
    }
    private void ecrireConn(PrintWriter out , HttpSession session , HttpServletRequest request) {
       session = request.getSession();
-      if( session == null)
+      if( session.getAttribute("User") == null)
       {
          out.println("<tr><td> Nom d'usager : </td><td> <input id=\"Username\" type=\"text\" class=\"Text_Box\" name=\"User\" /> </td></tr>");
          out.println("<tr><td> Mot de passe : </td><td> <input id=\"Password\" type=\"password\" class=\"Text_Box\" name=\"Password\" /> </td></tr>");
@@ -150,7 +178,8 @@ public class Catalogue extends HttpServlet {
       else
       {
          out.println("<tr><td> Bienvenue à vous "+session.getAttribute("User"));
-         out.println(session.getAttribute("Ecus"));
+         out.println(session.getAttribute("Ecus")+" Ecus");
+         out.println("<tr><td><button id=\"btndeconnexion\" type=\"submit\" class=\"BTN_Deconnexion\">Se déconnecter</button></td></tr>");
       }
       
    }
@@ -172,7 +201,10 @@ public class Catalogue extends HttpServlet {
          {
             out.println("<tr><td>"+rstTous.getString(2).toString()+"</td>"+"<td>"+rstTous.getString(3).toString()+"</td>"+"<td>"+rstTous.getString(4).toString()+"</td>"+"<td>"
                     + rstTous.getString(5).toString()+"</td>");
-            out.println("<td><button id=\"btnajouter\" type=\"submit\" class=\"BTN_Ajouter\">Ajouter Au Panier</button></td>");
+            if( session.getAttribute("User") != null)
+            {
+               out.println("<td><button id=\"btnajouter\" type=\"submit\" class=\"BTN_Ajouter\">Ajouter Au Panier</button></td>");
+            }
             out.println("</tr>");
             
          }
@@ -198,7 +230,10 @@ public class Catalogue extends HttpServlet {
          {
             out.println("<tr><td>"+rstItems.getString(2).toString()+"</td>"+"<td>"+rstItems.getString(5).toString()+"</td>"+"<td>"+rstItems.getString(3).toString()+"</td>"+"<td>"
                     + rstItems.getString(4).toString()+"</td>");
-            out.println("<td><button id=\"btnajouter\" type=\"submit\" class=\"BTN_Ajouter\">Ajouter Au Panier</button></td>");
+            if( session.getAttribute("User") != null)
+            {
+               out.println("<td><button id=\"btnajouter\" type=\"submit\" class=\"BTN_Ajouter\">Ajouter Au Panier</button></td>");
+            }
             out.println("</tr>");
          }
       }
