@@ -46,7 +46,7 @@ public class Catalogue extends HttpServlet {
          out.println("<html>");
          ecrireTete(out,"Catalogue");
          out.println("<body>");
-         out.println("<div class=\"Catalogue\">");
+         out.println("<div class=\"Catalogue\">");  
          out.println("<img src='Images/titre1.png' height='124' width='573'/></a>");
          out.println("<div class=\"connexion\">");
          if( session.getAttribute("User") == null)
