@@ -157,8 +157,11 @@ public class Catalogue extends HttpServlet {
             
             while (rstTous.next())
             {
-               out.println("<tr><td>"+rstTous.getString(2).toString()+"<td>"+rstTous.getString(3).toString()+"<td>"+rstTous.getString(4).toString()+"<td>"
-                       + rstTous.getString(5).toString());
+               out.println("<tr><td>"+rstTous.getString(2).toString()+"</td>"+"<td>"+rstTous.getString(3).toString()+"</td>"+"<td>"+rstTous.getString(4).toString()+"</td>"+"<td>"
+                       + rstTous.getString(5).toString()+"</td>");
+               out.println("<td><button id=\"btnajouter\" type=\"submit\" class=\"BTN_Ajouter\">Ajouter Au Panier</button></td>");
+               out.println("</tr>");
+            
             }
         }
         catch(SQLException sqlex){ System.out.println(sqlex);}
@@ -180,8 +183,10 @@ public class Catalogue extends HttpServlet {
             ResultSet rstItems =(ResultSet)stm1.getObject(1);
             while (rstItems.next())
             {
-               out.println("<tr><td>"+rstItems.getString(2).toString()+"<td>"+rstItems.getString(5).toString()+"<td>"+rstItems.getString(3).toString()+"<td>"
-                       + rstItems.getString(4).toString());
+               out.println("<tr><td>"+rstItems.getString(2).toString()+"</td>"+"<td>"+rstItems.getString(5).toString()+"</td>"+"<td>"+rstItems.getString(3).toString()+"</td>"+"<td>"
+                       + rstItems.getString(4).toString()+"</td>");
+               out.println("<td><button id=\"btnajouter\" type=\"submit\" class=\"BTN_Ajouter\">Ajouter Au Panier</button></td>");
+               out.println("</tr>");
             }
         }
         catch(SQLException sqlex){ System.out.println(sqlex);}
