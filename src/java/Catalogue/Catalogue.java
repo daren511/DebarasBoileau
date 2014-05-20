@@ -49,15 +49,13 @@ public class Catalogue extends HttpServlet {
          out.println("<div class=\"Catalogue\">");  
          out.println("<img src='Images/titre1.png' height='124' width='573'/></a>");
          out.println("<div class=\"connexion\">");
+         out.println("<div class=\"connexionIMG\">");
+         panierOuInscription(out);
+         out.println("</div>");
          if( session.getAttribute("User") == null)
-         {
             out.println("<form action=\"ConnexionUser\" method=\"POST\">");
-           
-         }
          else
-         {
             out.println("<form action=\"logout\" method=\"POST\">");
-         }
          out.println("<table>");
          ecrireConn(out, session, request);
          out.println("</table>");
@@ -106,21 +104,17 @@ public class Catalogue extends HttpServlet {
          out.println("<html>");
          ecrireTete(out,"Catalogue");
          out.println("<body>");
+         panierOuInscription(out);
          out.println("<div class=\"Catalogue\">");
          out.println("<img src='Images/titre1.png' height='124' width='573'/></a>");
+         
          out.println("<div class=\"connexion\">");
          if( session.getAttribute("User") == null)
-         {
             out.println("<form action=\"ConnexionUser\" method=\"POST\">");
-            //out.println("<form class=\"Inscription\" action=\"Inscription\" method=\"POST\">");
-            //out.println("<button id=\"btnInscription\" type=\"submit\" class=\"BTN_Inscription\">Inscription</button>");
-            //out.println("</form>");
-         }
+         
          else
-         {
             out.println("<form action=\"logout\" method=\"POST\">");
-            //out.println("<button id=\"btnpanier\" type=\"submit\" class=\"BTN_Panier\">Panier</button>");
-         }
+         
          out.println("<table>");
          ecrireConn(out, session, request);
          out.println("</table>");
@@ -213,6 +207,13 @@ public class Catalogue extends HttpServlet {
       
       
       
+   }
+   
+   private void panierOuInscription(PrintWriter out){
+      if( session.getAttribute("User") != null)
+            out.println("<tr><td><a href=\"/DebarasBoileau/Panier\"><img src='Images/Panier.png'  height='32' width='32'></a></td></tr>"); 
+      else
+         out.println("<tr><td><a href=\"/DebarasBoileau/Inscription\"><img src='Images/Inscription.png'  height='32' width='32'></a></td></tr>");       
    }
    protected void listerParGenre(String genre ,PrintWriter out){
       try
