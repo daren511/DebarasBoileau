@@ -180,40 +180,51 @@ public class Catalogue extends HttpServlet {
       
    }
    protected void listerTous(PrintWriter out,HttpServletRequest request){
-      String tbRecherche = request.getParameter("Recherche");
-      String sql;
-      try
-      {
-         //Connexion DB
+      try{
+         String tbRecherche = request.getParameter("Recherche");
          ConnectionOracle oradb = new ConnectionOracle();
+         CallableStatement stm1;
          oradb.connecter();
-         // Déclaration
          if(tbRecherche == null)
          {
-            sql = "select * from items";
+            stm1 = oradb.getConnexion().prepareCall("{? = call GESTIONINVENTAIRE.LISTERTOUS()}",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            stm1.registerOutParameter(1, OracleTypes.CURSOR);
+            stm1.execute();
+            ResultSet rstItems =(ResultSet)stm1.getObject(1);
+            
+            while (rstItems.next())
+            {
+               out.println("<tr><td>"+rstItems.getString(2).toString()+"</td>"+"<td>"+rstItems.getString(5).toString()+"</td>"+"<td>"+rstItems.getString(3).toString()+"</td>"+"<td>"
+                       + rstItems.getString(4).toString()+"</td>");
+               if( session.getAttribute("User") != null)
+               {
+                  out.println("<td><button id=\"btnajouter\" type=\"submit\" class=\"BTN_Ajouter\">Ajouter Au Panier</button></td>");
+               }
+               out.println("</tr>");
+            }
          }
          else
-            sql = "Select * from Items where Nomitem like '%"+tbRecherche+"%'" ;
-         ResultSet rstTous;
-         // Lister les items
-         Statement stm1 = oradb.getConnexion().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-         rstTous = stm1.executeQuery(sql);
-         
-         while (rstTous.next())
          {
-            out.println("<tr><td>"+rstTous.getString(2).toString()+"</td>"+"<td>"+rstTous.getString(3).toString()+"</td>"+"<td>"+rstTous.getString(4).toString()+"</td>"+"<td>"
-                    + rstTous.getString(5).toString()+"</td>");
-            if( session.getAttribute("User") != null)
-            {
-               out.println("<td><button id=\"btnajouter\" type=\"submit\" class=\"BTN_Ajouter\">Ajouter Au Panier</button></td>");
-            }
-            out.println("</tr>");
+            stm1 = oradb.getConnexion().prepareCall("{? = call GESTIONINVENTAIRE.RECHERCHESANSGENRE(?)}",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            stm1.registerOutParameter(1, OracleTypes.CURSOR);
+            stm1.setString(2, tbRecherche);
+            stm1.execute();
+            ResultSet rstItems =(ResultSet)stm1.getObject(1);
             
+            while (rstItems.next())
+            {
+               
+               out.println("<tr><td>"+rstItems.getString(2).toString()+"</td>"+"<td>"+rstItems.getString(5).toString()+"</td>"+"<td>"+rstItems.getString(3).toString()+"</td>"+"<td>"
+                       + rstItems.getString(4).toString()+"</td>");
+               if( session.getAttribute("User") != null)
+               {
+                  out.println("<td><button id=\"btnajouter\" type=\"submit\" class=\"BTN_Ajouter\">Ajouter Au Panier</button></td>");
+               }
+               out.println("</tr>");
+            } 
          }
       }
       catch(SQLException sqlex){ System.out.println(sqlex);}
-      
-      
       
    }
    
@@ -253,7 +264,7 @@ public class Catalogue extends HttpServlet {
          }
          else
          {
-            stm1 = oradb.getConnexion().prepareCall("{? = call GESTIONINVENTAIRE.LISTERRECHERCHE(?,?)}",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            stm1 = oradb.getConnexion().prepareCall("{? = call GESTIONINVENTAIRE.RECHERCHELIKEGENRE(?,?)}",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             stm1.registerOutParameter(1, OracleTypes.CURSOR);
             stm1.setString(2, genre);
             stm1.setString(3, tbRecherche);
