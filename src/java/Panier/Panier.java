@@ -48,8 +48,27 @@ public class Panier extends HttpServlet {
          out.println("<html>");
          ecrireTete(out,"Panier");
          out.println("<body>");
-         out.println("<div class=\"Catalogue\">");  
-         out.println("</div");
+         out.println("<div class=\"Catalogue\">");
+         out.println("<img src='Images/titre1.png' height='124' width='573'/></a>");
+         out.println("<div class=\"connexion\">");
+         out.println("<table><tr><td> Bienvenue à vous "+session.getAttribute("User"));
+         out.println(session.getAttribute("Ecus")+" Ecus");
+         out.println("</table>");
+         out.println("</div>");
+         out.println("</div>");
+         out.println("<div class='Liste'>");
+         out.println("<table id='ObjectList'>");
+         out.println("<tr>");
+         out.println("<th>Nom d'item</th>");
+         out.println("<th>Genre</th>");
+         out.println("<th>Prix</th>");
+         out.println("<th>Disponible</th>");
+         out.println("<th>Quantité</th>");
+         out.println("<th></th>");
+         out.println("</tr>");
+         listerPanier(out);
+         out.println("</table>");
+         out.println("</div>");
          out.println("</body>");
          out.println("</html>");
         }
@@ -61,6 +80,33 @@ public class Panier extends HttpServlet {
         writer.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"WebApp.css\">");
         writer.println("</head>");
     }
+    
+    protected void listerPanier(PrintWriter out){
+      try
+      {
+         //Connexion DB
+         ConnectionOracle oradb = new ConnectionOracle();
+         oradb.connecter();
+         // Déclaration
+         String sqlpanier = "select J.NOMUSAGER,P.IDITEM,NOMITEM,GENRE,PRIX,QUANTITEDISPO,QUANTITE from PANIER P INNER JOIN ITEMS I ON P.IDITEM=I.IDITEM INNER JOIN JOUEURS J ON J.IDJOUEUR=P.IDJOUEUR WHERE J.NOMUSAGER='" + session.getAttribute("User") + "'";
+         ResultSet rstTous;
+         // Lister les items
+         Statement stm2 = oradb.getConnexion().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+         rstTous = stm2.executeQuery(sqlpanier);
+         
+         rstTous.beforeFirst();
+         
+         while (rstTous.next())
+         {
+            out.println("<tr><td>"+rstTous.getString(3).toString()+"</td>"+"<td>"+rstTous.getString(4).toString()+"</td>"+"<td>"+rstTous.getString(5).toString()+"</td>"+"<td>"
+                    + rstTous.getString(6).toString()+"</td>" + "<td>"+rstTous.getString(7).toString()+"</td>");
+            out.println("<td><button id=\"btnmodifier\" type=\"submit\" class=\"BTN_Modifier\">Modifier</button></td>");
+            out.println("</tr>");
+            
+         }
+      }
+      catch(SQLException sqlex){ System.out.println(sqlex);}   
+   }
 
     
 
