@@ -69,7 +69,7 @@ public class Catalogue extends HttpServlet {
          out.println("<option value='Armes'>Armes</option>");
          out.println("<option value='Armures'>Armures</option>");
          out.println("<option value='Potions'>Potions</option>");
-         out.println("<option value='Habilités'>Habilites</option>");
+         out.println("<option value='Habilites'>Habilites</option>");
          out.println("</select>");
          out.println("<tr><td> Recherche : </td><td> <input id=\"Recherche\" type=\"text\" class=\"Text_Box\" name=\"Recherche\" /> </td></tr>");
          out.println("<button id='btnfiltrer' type=\"submit\" class='BTN_Filtrer'>Filtrer Inventaire</button>");
@@ -193,7 +193,7 @@ public class Catalogue extends HttpServlet {
             sql = "select * from items";
          }
          else
-            sql = "Select Nomitem,Genre,Prix,Quantitedispo from Items where Nomitem like'%"+tbRecherche+"%'" ;
+            sql = "Select * from Items where Nomitem like '%"+tbRecherche+"%'" ;
          ResultSet rstTous;
          // Lister les items
          Statement stm1 = oradb.getConnexion().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -290,7 +290,6 @@ public class Catalogue extends HttpServlet {
    protected void doGet(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException {
       processRequestTous(request, response);
-      System.out.println("GET");
    }
    
    /**
