@@ -1,33 +1,27 @@
 /*General*/
 
-body
-{
+body{
    background-image:url("Images/Bg_App.jpg");
 }
 
 /* Inscription.html*/
-input.Text_Box
-{
+input.Text_Box{
    width:110px;
 }
 
-.BTN_Inscrire
-{
+.BTN_Inscrire{
    border-radius:25px;
 }
 
-.bon
-{
+.bon{
    color:green;
 }
 
-.mauvais
-{
+.mauvais{
    color:red;
 }
 
-div.Inscription
-{
+div.Inscription{
    font-weight:bold;
    margin-left:auto;
    margin-right:auto;
@@ -39,34 +33,29 @@ div.Inscription
    background-color:rgba(255,255,255,0.8);
 }
 
-table#T_Inscription 
-{
+table#T_Inscription {
    margin:0 auto;
    text-align:center;
 }
 
-#Form
-{
+#Form{
    text-align:center;
 }
 
 /* Catalogue.html*/
 
-div.connexion
-{  
+div.connexion{  
     position: absolute;
     left: 70%;
     top:5%;
 }
 
-div.Liste
-{
+div.Liste{
    position:absolute;
    top:24%;
 }
 
-form.CB
-{
+form.CB{
    position:absolute;
    top:21%;
 }
