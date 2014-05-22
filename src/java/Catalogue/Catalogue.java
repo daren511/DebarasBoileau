@@ -40,13 +40,13 @@ public class Catalogue extends HttpServlet {
       response.setContentType("text/html;charset=UTF-8");
       try (PrintWriter out = response.getWriter()) {
          session = request.getSession();
-
+         
          /* TODO output your page here. You may use following sample code. */
          out.println("<!DOCTYPE html>");
          out.println("<html>");
          ecrireTete(out,"Catalogue");
          out.println("<body>");
-         out.println("<div class=\"Catalogue\">");  
+         out.println("<div class=\"Catalogue\">");
          out.println("<img src='Images/titre1.png' height='124' width='573'/></a>");
          out.println("<div class=\"connexion\">");
          out.println("<div class=\"connexionIMG\">");
@@ -71,6 +71,7 @@ public class Catalogue extends HttpServlet {
          out.println("<option value='Potions'>Potions</option>");
          out.println("<option value='Habilités'>Habilites</option>");
          out.println("</select>");
+         out.println("<tr><td> Recherche : </td><td> <input id=\"Recherche\" type=\"text\" class=\"Text_Box\" name=\"Recherche\" /> </td></tr>");
          out.println("<button id='btnfiltrer' type=\"submit\" class='BTN_Filtrer'>Filtrer Inventaire</button>");
          out.println("</div>");
          out.println("</form>");
@@ -82,11 +83,11 @@ public class Catalogue extends HttpServlet {
          out.println("<th>Prix</th>");
          out.println("<th>Quantité disponible</th>");
          if( session.getAttribute("User") != null)
-            {
-               out.println("<th></th>");
-            }
+         {
+            out.println("<th></th>");
+         }
          out.println("</tr>");
-         listerTous(out);
+         listerTous(out,request);
          out.println("</table>");
          out.println("</div>");
          out.println("</div>");
@@ -130,6 +131,7 @@ public class Catalogue extends HttpServlet {
          out.println("<option value=\"Potions\">Potions</option>");
          out.println("<option value=\"Habilites\">Habilites</option>");
          out.println("</select>");
+         out.println("<tr><td> Recherche : </td><td> <input id=\"Recherche\" type=\"text\" class=\"Text_Box\" name=\"Recherche\" /> </td></tr>");
          out.println("<button id=\"btnfiltrer\" type=\"submit\" class=\"BTN_Filtrer\">Filtrer Inventaire</button>");
          out.println("</form>");
          out.println("</div>");
@@ -141,11 +143,11 @@ public class Catalogue extends HttpServlet {
          out.println("<th>Prix</th>");
          out.println("<th>Quantité disponible</th>");
          if( session.getAttribute("User") != null)
-            {
-               out.println("<th></th>");
-            }
+         {
+            out.println("<th></th>");
+         }
          out.println("</tr>");
-         listerParGenre(genre, out);
+         listerParGenre(genre, out,request);
          out.println("</table>");
          out.println("</div>");
          out.println("</div>");
@@ -177,19 +179,25 @@ public class Catalogue extends HttpServlet {
       }
       
    }
-   protected void listerTous(PrintWriter out){
-      
+   protected void listerTous(PrintWriter out,HttpServletRequest request){
+      String tbRecherche = request.getParameter("Recherche");
+      String sql;
       try
       {
          //Connexion DB
          ConnectionOracle oradb = new ConnectionOracle();
          oradb.connecter();
          // Déclaration
-         String sqltous = "select * from items";
+         if(tbRecherche == null)
+         {
+            sql = "select * from items";
+         }
+         else
+            sql = "Select Nomitem,Genre,Prix,Quantitedispo from Items where Nomitem like'%"+tbRecherche+"%'" ;
          ResultSet rstTous;
          // Lister les items
          Statement stm1 = oradb.getConnexion().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-         rstTous = stm1.executeQuery(sqltous);
+         rstTous = stm1.executeQuery(sql);
          
          while (rstTous.next())
          {
@@ -211,31 +219,58 @@ public class Catalogue extends HttpServlet {
    
    private void panierOuInscription(PrintWriter out){
       if( session.getAttribute("User") != null)
-            out.println("<tr><td><a href=\"/DebarasBoileau/Panier\"><img src='Images/Panier.png'  height='32' width='32'></a></td></tr>"); 
+         out.println("<tr><td><a href=\"/DebarasBoileau/Panier\"><img src='Images/Panier.png'  height='32' width='32'></a></td></tr>");
       else
-         out.println("<tr><td><a href=\"/DebarasBoileau/Inscription\"><img src='Images/Inscription.png'  height='32' width='32'></a></td></tr>");       
+         out.println("<tr><td><a href=\"/DebarasBoileau/Inscription\"><img src='Images/Inscription.png'  height='32' width='32'></a></td></tr>");
    }
-   protected void listerParGenre(String genre ,PrintWriter out){
+   protected void listerParGenre(String genre ,PrintWriter out,HttpServletRequest request){
       try
       {
          //Connexion DB
+         String tbRecherche = request.getParameter("Recherche");
          ConnectionOracle oradb = new ConnectionOracle();
+         CallableStatement stm1;
          oradb.connecter();
-         
-         CallableStatement stm1 = oradb.getConnexion().prepareCall("{? = call GESTIONINVENTAIRE.LISTER(?)}",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-         stm1.registerOutParameter(1, OracleTypes.CURSOR);
-         stm1.setString(2, genre);
-         stm1.execute();
-         ResultSet rstItems =(ResultSet)stm1.getObject(1);
-         while (rstItems.next())
+         if(tbRecherche == null)
          {
-            out.println("<tr><td>"+rstItems.getString(2).toString()+"</td>"+"<td>"+rstItems.getString(5).toString()+"</td>"+"<td>"+rstItems.getString(3).toString()+"</td>"+"<td>"
-                    + rstItems.getString(4).toString()+"</td>");
-            if( session.getAttribute("User") != null)
+            stm1 = oradb.getConnexion().prepareCall("{? = call GESTIONINVENTAIRE.LISTER(?)}",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            stm1.registerOutParameter(1, OracleTypes.CURSOR);
+            stm1.setString(2, genre);
+            stm1.execute();
+            ResultSet rstItems =(ResultSet)stm1.getObject(1);
+            
+            while (rstItems.next())
             {
-               out.println("<td><button id=\"btnajouter\" type=\"submit\" class=\"BTN_Ajouter\">Ajouter Au Panier</button></td>");
+               
+               out.println("<tr><td>"+rstItems.getString(2).toString()+"</td>"+"<td>"+rstItems.getString(5).toString()+"</td>"+"<td>"+rstItems.getString(3).toString()+"</td>"+"<td>"
+                       + rstItems.getString(4).toString()+"</td>");
+               if( session.getAttribute("User") != null)
+               {
+                  out.println("<td><button id=\"btnajouter\" type=\"submit\" class=\"BTN_Ajouter\">Ajouter Au Panier</button></td>");
+               }
+               out.println("</tr>");
             }
-            out.println("</tr>");
+         }
+         else
+         {
+            stm1 = oradb.getConnexion().prepareCall("{? = call GESTIONINVENTAIRE.LISTERRECHERCHE(?,?)}",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            stm1.registerOutParameter(1, OracleTypes.CURSOR);
+            stm1.setString(2, genre);
+            stm1.setString(3, tbRecherche);
+            stm1.execute();
+            ResultSet rstItems =(ResultSet)stm1.getObject(1);
+            
+            while (rstItems.next())
+            {
+               
+               out.println("<tr><td>"+rstItems.getString(2).toString()+"</td>"+"<td>"+rstItems.getString(5).toString()+"</td>"+"<td>"+rstItems.getString(3).toString()+"</td>"+"<td>"
+                       + rstItems.getString(4).toString()+"</td>");
+               if( session.getAttribute("User") != null)
+               {
+                  out.println("<td><button id=\"btnajouter\" type=\"submit\" class=\"BTN_Ajouter\">Ajouter Au Panier</button></td>");
+               }
+               out.println("</tr>");
+            } 
          }
       }
       catch(SQLException sqlex){ System.out.println(sqlex);}
