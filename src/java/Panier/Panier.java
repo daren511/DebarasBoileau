@@ -49,10 +49,11 @@ public class Panier extends HttpServlet {
          ecrireTete(out,"Panier");
          out.println("<body>");
          out.println("<div class=\"Catalogue\">");
-         out.println("<img src='Images/titre1.png' height='124' width='573'/></a>");
+         out.println("<a href=\"/DebarasBoileau/Catalogue\"><img src='Images/titre1.png' height='124' width='573'/></a>");
          out.println("<div class=\"connexion\">");
          out.println("<table><tr><td> Bienvenue à vous "+session.getAttribute("User"));
-         out.println(session.getAttribute("Ecus")+" Ecus");
+         out.println("<br>Vous avez " +session.getAttribute("Ecus")+" Ecus");
+         out.println("<br>");
          out.println("</table>");
          out.println("</div>");
          out.println("</div>");
