@@ -53,7 +53,7 @@ public class Panier extends HttpServlet {
          out.println("<div class=\"connexion\">");
          out.println("<table><tr><td> Bienvenue à vous "+session.getAttribute("User"));
          out.println("<br>Vous avez " +session.getAttribute("Ecus")+" Ecus");
-         out.println("<br>");
+         out.println("<br><form action=\"logout\" method=\"GET\"><button id=\"btndeconnexion\" type=\"submit\" class=\"BTN_Deconnexion\">Se déconnecter</button></form>");
          out.println("</table>");
          out.println("</div>");
          out.println("</div>");
@@ -100,8 +100,8 @@ public class Panier extends HttpServlet {
          while (rstTous.next())
          {
             out.println("<tr><td>"+rstTous.getString(3).toString()+"</td>"+"<td>"+rstTous.getString(4).toString()+"</td>"+"<td>"+rstTous.getString(5).toString()+"</td>"+"<td>"
-                    + rstTous.getString(6).toString()+"</td>" + "<td>"+rstTous.getString(7).toString()+"</td>");
-            out.println("<td><button id=\"btnmodifier\" type=\"submit\" class=\"BTN_Modifier\">Modifier</button></td>");
+                    + rstTous.getString(6).toString()+"</td>" + "<td><input type=text name=TB_Quantite value=" + rstTous.getString(7).toString()+ "></input></td>");
+            out.println("<td><form action=\"Panier\" method=\"GET\"><input type=\"submit\" id=\"btnmodifier\" class=\"BTN_Modifier\" value=\"Modifier\"></input></form></td>");
             out.println("</tr>");
             
          }

@@ -105,11 +105,11 @@ public class Catalogue extends HttpServlet {
          out.println("<html>");
          ecrireTete(out,"Catalogue");
          out.println("<body>");
-         panierOuInscription(out);
+         //panierOuInscription(out);
          out.println("<div class=\"Catalogue\">");
-         out.println("<img src='Images/titre1.png' height='124' width='573'/></a>");
-         
+         out.println("<img src='Images/titre1.png' height='124' width='573'/>");
          out.println("<div class=\"connexion\">");
+         panierOuInscription(out);
          if( session.getAttribute("User") == null)
             out.println("<form action=\"ConnexionUser\" method=\"POST\">");
          
@@ -174,7 +174,7 @@ public class Catalogue extends HttpServlet {
       else
       {
          out.println("<tr><td> Bienvenue à vous "+session.getAttribute("User"));
-         out.println(session.getAttribute("Ecus")+" Ecus");
+         out.println("<br>Vous avez "+session.getAttribute("Ecus")+" Ecus");
          out.println("<tr><td><button id=\"btndeconnexion\" type=\"submit\" class=\"BTN_Deconnexion\">Se déconnecter</button></td></tr>");
       }
       
