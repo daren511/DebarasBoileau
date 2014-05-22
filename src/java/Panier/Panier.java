@@ -100,8 +100,9 @@ public class Panier extends HttpServlet {
          while (rstTous.next())
          {
             out.println("<tr><td>"+rstTous.getString(3).toString()+"</td>"+"<td>"+rstTous.getString(4).toString()+"</td>"+"<td>"+rstTous.getString(5).toString()+"</td>"+"<td>"
-                    + rstTous.getString(6).toString()+"</td>" + "<td><input type=text name=TB_Quantite value=" + rstTous.getString(7).toString()+ "></input></td>");
-            out.println("<td><form action=\"Panier\" method=\"GET\"><input type=\"submit\" id=\"btnmodifier\" class=\"BTN_Modifier\" value=\"Modifier\"></input></form></td>");
+                    + rstTous.getString(6).toString()+"</td>" + "<td><form action=\"Panier\" method=\"POST\"><input type=text name=TB_Quantite value=" + rstTous.getString(7).toString()+ "></input></td>");
+            out.println("<td><input type=\"submit\" name="+rstTous.getString(2).toString()+ " id=\"btnmodifier\" class=\"BTN_Modifier\" value=\"Modifier\"></input></form>");
+             out.println("<form action=\"Panier\" method=\"POST\"><input type=\"submit\" name="+rstTous.getString(2).toString()+ " id=\"btnsupprimer\" class=\"BTN_Supprimer\" value=\"Supprimer\"></input></form></td>");
             out.println("</tr>");
             
          }
