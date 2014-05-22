@@ -190,7 +190,7 @@ public class Catalogue extends HttpServlet {
          // Déclaration
          if(tbRecherche == null)
          {
-            sql = "select * from items";
+            sql = "select * from items ";
          }
          else
             sql = "Select * from Items where Nomitem like '%"+tbRecherche+"%'" ;
@@ -233,7 +233,7 @@ public class Catalogue extends HttpServlet {
          oradb.connecter();
          if(tbRecherche == null)
          {
-            stm1 = oradb.getConnexion().prepareCall("{? = call GESTIONINVENTAIRE.LISTER(?)}",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            stm1 = oradb.getConnexion().prepareCall("{? = call GESTIONINVENTAIRE.LISTERAVECGENRE(?)}",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             stm1.registerOutParameter(1, OracleTypes.CURSOR);
             stm1.setString(2, genre);
             stm1.execute();
