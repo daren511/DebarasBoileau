@@ -97,10 +97,7 @@ public class Inscription extends HttpServlet {
             out.println("<tr><td><a href=\"/DebarasBoileau/Catalogue\"><img src='Images/Catalogue.png'  height='39' width='38'></a></td></tr>");
             
       
-            out.println("<tr><td class='"+etat+"' colspan='2'>"+texte+"</td></tr>");       
-            
-            
-            
+            out.println("<tr><td class='"+etat+"' colspan='2'>"+texte+"</td></tr>");
             out.println("</table>");
             out.println("</form>");
             out.println("</div>");
