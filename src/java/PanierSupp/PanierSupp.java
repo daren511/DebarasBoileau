@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package PanierModif;
+package PanierSupp;
 
 import ConnexionUser.ConnectionOracle;
 import java.io.IOException;
@@ -22,8 +22,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author 200666155
  */
-@WebServlet(name = "PanierModif", urlPatterns = {"/PanierModif"})
-public class PanierModif extends HttpServlet {
+@WebServlet(name = "PanierSupp", urlPatterns = {"/PanierSupp"})
+public class PanierSupp extends HttpServlet {
     private HttpSession session;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,32 +37,30 @@ public class PanierModif extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        //try (PrintWriter out = response.getWriter()) {
         session = request.getSession();
         int idItem = Integer.parseInt(request.getParameter("Item"));
-        int NombreQts = Integer.parseInt(request.getParameter("TB_Quantite"));
         String user = (String)session.getAttribute("User");
-        Modifier(idItem,user,NombreQts);
+        Supprimer(idItem,user);
         
         response.sendRedirect("http://localhost:8084/DebarasBoileau/Panier");
     }
     
-    private void Modifier(int idItem,String user,int NombreQts){
+    private void Supprimer(int idItem,String user){
         try
         {
             ConnectionOracle oradb = new ConnectionOracle();
             oradb.connecter();
             
-            CallableStatement stm1=oradb.getConnexion().prepareCall("{call GESTIONPANIER.ModifierPanier(?,?,?)}");
+            CallableStatement stm1=oradb.getConnexion().prepareCall("{call GESTIONPANIER.SupprimerPanier(?,?)}");
             
             stm1.setString(1,user);
             stm1.setInt(2, idItem);
-            stm1.setInt(3, NombreQts);
             
             stm1.executeUpdate(); 
         }
         catch(SQLException sqlex){ System.out.println(sqlex);} 
     }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
