@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.JOptionPane;
 import oracle.jdbc.*;
 import oracle.jdbc.pool.*;
 
@@ -133,7 +134,8 @@ private void writeConnexionTB(PrintWriter out){
            }
            else
            {
-              out.println("Erreur,l'un des champs est erroné"); // a regler
+              String st="L'un des champs est invalide";
+              JOptionPane.showMessageDialog(null, st);
               response.sendRedirect("http://localhost:8084/DebarasBoileau/Catalogue");
            }
            
