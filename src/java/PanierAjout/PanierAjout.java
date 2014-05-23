@@ -57,7 +57,7 @@ public class PanierAjout extends HttpServlet {
             stm1.setString(1,user);
             stm1.setInt(2, idItem);
             
-            int n = stm1.executeUpdate(); 
+            stm1.executeUpdate(); 
         }
         catch(SQLException sqlex){ System.out.println(sqlex);} 
     }
