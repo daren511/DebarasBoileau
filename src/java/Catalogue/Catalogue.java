@@ -219,7 +219,7 @@ public class Catalogue extends HttpServlet {
                         + rst.getString(4).toString()+"</td>");
                 if( session.getAttribute("User") != null)
                 {
-                    out.println("<td><form action=\"PanierAjout\" method=\"POST\"><input id=\"HiddenAdd\" type=\"hidden\" name=\"Item\" value="+ rst.getString(1) +" /><button id=\"btnajouter\" type=\"submit\" class=\"BTN_Ajouter\">Ajouter Au Panier</button></form></td>");
+                    out.println("<td><form action=\"PanierAjout\" method=\"POST\"><input type=\"hidden\" name=\"Item\" value="+ rst.getString(1) +" /><button id=\"btnajouter\" type=\"submit\" class=\"BTN_Ajouter\">Ajouter Au Panier</button></form></td>");
                 }
                 out.println("</tr>");
             }
