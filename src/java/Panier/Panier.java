@@ -28,6 +28,7 @@ import oracle.jdbc.OracleTypes;
 @WebServlet(name = "Panier", urlPatterns = {"/Panier"})
 public class Panier extends HttpServlet {
    private HttpSession session;
+   private double Total;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -99,13 +100,14 @@ public class Panier extends HttpServlet {
          
          while (rstTous.next())
          {
+            Total = rstTous.getDouble(5) * rstTous.getDouble(7); 
             out.println("<tr><td>"+rstTous.getString(3).toString()+"</td>"+"<td>"+rstTous.getString(4).toString()+"</td>"+"<td>"+rstTous.getString(5).toString()+"</td>"+"<td>"
                     + rstTous.getString(6).toString()+"</td>" + "<td><form action=\"PanierModif\" method=\"POST\"><input type=number name=TB_Quantite value=" + rstTous.getString(7).toString()+ "></input></td>");
-            out.println("<td><input type=\"submit\" name="+rstTous.getString(2).toString()+ " id=\"btnmodifier\" class=\"BTN_Modifier\" value=\"Modifier\"></input></form>");
-             out.println("<form action=\"PanierSupp\" method=\"POST\"><input type=\"submit\" name="+rstTous.getString(2).toString()+ " id=\"btnsupprimer\" class=\"BTN_Supprimer\" value=\"Supprimer\"></input></form></td>");
+            out.println("<td><input type=\"submit\" id=\"btnmodifier\" class=\"BTN_Modifier\" value=\"Modifier\"></input><input type=\"hidden\" value=" + rstTous.getString(2).toString()+ " name=\"Item\"></input></form>");
+             out.println("<form action=\"PanierSupp\" method=\"POST\"><input type=\"submit\" id=\"btnsupprimer\" class=\"BTN_Supprimer\" value=\"Supprimer\"></input><input type=\"hidden\" value=" + rstTous.getString(2).toString()+ " name=\"Item\"></form></td>");
             out.println("</tr>");
-            
          }
+         //out.println("<div>" + Total + "</div>");
       }
       catch(SQLException sqlex){ System.out.println(sqlex);}   
    }
