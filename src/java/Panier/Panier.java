@@ -89,14 +89,15 @@ public class Panier extends HttpServlet {
          //Connexion DB
          ConnectionOracle oradb = new ConnectionOracle();
          oradb.connecter();
+         CallableStatement stm1;
          // Déclaration
-         String sqlpanier = "select J.NOMUSAGER,P.IDITEM,NOMITEM,GENRE,PRIX,QUANTITEDISPO,QUANTITE from PANIER P INNER JOIN ITEMS I ON P.IDITEM=I.IDITEM INNER JOIN JOUEURS J ON J.IDJOUEUR=P.IDJOUEUR WHERE J.NOMUSAGER='" + session.getAttribute("User") + "'";
-         ResultSet rstTous;
-         // Lister les items
-         Statement stm2 = oradb.getConnexion().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-         rstTous = stm2.executeQuery(sqlpanier);
+         stm1 = oradb.getConnexion().prepareCall("{? = call GESTIONPANIER.LISTERPANIER(?)}",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
          
-         rstTous.beforeFirst();
+         stm1.registerOutParameter(1, OracleTypes.CURSOR);
+         stm1.setString(2, (String)session.getAttribute("User"));
+         stm1.execute();
+         ResultSet rstTous =(ResultSet)stm1.getObject(1);
+         
          
          while (rstTous.next())
          {
