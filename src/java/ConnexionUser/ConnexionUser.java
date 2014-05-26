@@ -63,7 +63,7 @@ public class ConnexionUser extends HttpServlet {
             stm1.execute();
             
             ResultSet rest =(ResultSet)stm1.getObject(1);
-            if(rest.first())
+            if(rest.next())
             {
                siValide = true;
                ecus=rest.getFloat(3);
