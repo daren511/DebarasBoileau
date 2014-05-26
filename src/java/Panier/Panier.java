@@ -51,6 +51,7 @@ public class Panier extends HttpServlet {
          out.println("<body>");
          out.println("<div class=\"Catalogue\">");
          out.println("<a href=\"/DebarasBoileau/Catalogue\"><img src='Images/titre1.png' height='124' width='573'/></a>");
+         out.println("<a href=\"/DebarasBoileau/Inventaire\"><img src='Images/Inv.jpg' height='32' width='32'/></a>");
          out.println("<div class=\"connexion\">");
          out.println("<table><tr><td> Bienvenue à vous "+session.getAttribute("User"));
          out.println("<br>Vous avez " +session.getAttribute("Ecus")+" Ecus");
