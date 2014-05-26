@@ -86,6 +86,7 @@ public class Panier extends HttpServlet {
     protected void listerPanier(PrintWriter out){
         try
         {
+           
             //Connexion DB
             ConnectionOracle oradb = new ConnectionOracle();
             oradb.connecter();
