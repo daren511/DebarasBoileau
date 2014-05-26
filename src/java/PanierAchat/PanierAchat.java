@@ -84,7 +84,7 @@ public class PanierAchat extends HttpServlet {
                 
                 stm2.execute();
                 Compteur++;
-            }     
+            }   
         }
         catch(SQLException sqlex){ System.out.println(sqlex);} 
     }

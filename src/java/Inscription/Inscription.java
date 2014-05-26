@@ -130,7 +130,6 @@ public class Inscription extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        System.out.println("GET");
     }
     
     /**
@@ -207,10 +206,6 @@ public class Inscription extends HttpServlet {
             out.close();
         }
         
-        /*//confirmation test
-        out.println("<p>Vous avez bien ajoute le joueur suivant :</p>");
-        out.println("<p>" + username+" "+password+" "+prenom+" "+nom+"</p>");
-        */
         
         /**
          * Returns a short description of the servlet.

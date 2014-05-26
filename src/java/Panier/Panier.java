@@ -153,7 +153,6 @@ public class Panier extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        System.out.println("GET");
     }
     
     /**

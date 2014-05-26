@@ -62,19 +62,7 @@ public class Catalogue extends HttpServlet {
             out.println("</br>");
             out.println("</form>");
             out.println("</div>");
-            out.println("<form class=\"CB\" action=\"Catalogue\" method=\"POST\">");
-            out.println("<div>");
-            out.println("<select name=\"Genre\">");
-            out.println("<option value='Tous'>Tous</option>");
-            out.println("<option value='Armes'>Armes</option>");
-            out.println("<option value='Armures'>Armures</option>");
-            out.println("<option value='Potions'>Potions</option>");
-            out.println("<option value='Habilites'>Habilites</option>");
-            out.println("</select>");
-            out.println("<tr><td> Recherche : </td><td> <input id=\"Recherche\" type=\"text\" class=\"Text_Box\" name=\"Recherche\" /> </td></tr>");
-            out.println("<button id='btnfiltrer' type=\"submit\" class='BTN_Filtrer'>Filtrer Inventaire</button>");
-            out.println("</div>");
-            out.println("</form>");
+            ecrireSelectionMode(out);
             out.println("<div class='Liste'>");
             out.println("<table id='ObjectList'>");
             out.println("<tr>");
@@ -95,6 +83,23 @@ public class Catalogue extends HttpServlet {
             out.println("</html>");
         }
     }
+    
+    private void ecrireSelectionMode(PrintWriter out){
+            out.println("<form class=\"CB\" action=\"Catalogue\" method=\"POST\">");
+            out.println("<div>");
+            out.println("<select name=\"Genre\">");
+            out.println("<option value='Tous'>Tous</option>");
+            out.println("<option value='Armes'>Armes</option>");
+            out.println("<option value='Armures'>Armures</option>");
+            out.println("<option value='Potions'>Potions</option>");
+            out.println("<option value='Habilites'>Habilites</option>");
+            out.println("</select>");
+            out.println("<tr><td> Recherche : </td><td> <input id=\"Recherche\" type=\"text\" class=\"Text_Box\" name=\"Recherche\" /> </td></tr>");
+            out.println("<button id='btnfiltrer' type=\"submit\" class='BTN_Filtrer'>Filtrer Inventaire</button>");
+            out.println("</div>");
+            out.println("</form>");
+}
+    
     protected void processRequestGenre(HttpServletRequest request, HttpServletResponse response, String genre)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -122,19 +127,7 @@ public class Catalogue extends HttpServlet {
             out.println("</br>");
             out.println("</form>");
             out.println("</div>");
-            out.println("<div>");
-            out.println("<form class=\"CB\" action=\"Catalogue\" method=\"POST\">");
-            out.println("<select name='Genre'>");
-            out.println("<option value=\"Tous\">Tous</option>");
-            out.println("<option value=\"Armes\">Armes</option>");
-            out.println("<option value=\"Armures\">Armures</option>");
-            out.println("<option value=\"Potions\">Potions</option>");
-            out.println("<option value=\"Habilites\">Habilites</option>");
-            out.println("</select>");
-            out.println("<tr><td> Recherche : </td><td> <input id=\"Recherche\" type=\"text\" class=\"Text_Box\" name=\"Recherche\" /> </td></tr>");
-            out.println("<button id=\"btnfiltrer\" type=\"submit\" class=\"BTN_Filtrer\">Filtrer Inventaire</button>");
-            out.println("</form>");
-            out.println("</div>");
+            ecrireSelectionMode(out);
             out.println("<div class='Liste'>");
             out.println("<table id='ObjectList'>");
             out.println("<tr>");
