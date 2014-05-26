@@ -70,21 +70,36 @@ public class PanierAchat extends HttpServlet {
                 }
             }   
             
-            rstIdItem.first();
+            CallableStatement stm2=oradb.getConnexion().prepareCall("{?=call GESTIONPANIER.VerifPanier(?)}",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             
-            while(rstIdItem.next() && Disponible)
+            stm2.registerOutParameter(1, OracleTypes.CURSOR);
+            stm2.setString(2,user);
+            
+            stm2.execute(); 
+            ResultSet rst = (ResultSet)stm2.getObject(1);
+            
+            while(rst.next() && Disponible)
             {
-                idItem.add(Compteur,rstIdItem.getInt(1));
-                quantite.add(Compteur,rstIdItem.getInt(3));
-                CallableStatement stm2=oradb.getConnexion().prepareCall("{call GESTIONPANIER.AcheterItem(?,?,?)}");
+                idItem.add(Compteur,rst.getInt(1));
+                quantite.add(Compteur,rst.getInt(3));
+                CallableStatement stm3=oradb.getConnexion().prepareCall("{call GESTIONPANIER.AcheterItem(?,?,?)}");
              
-                stm2.setString(1,user);
-                stm2.setInt(2, idItem.get(Compteur));
-                stm2.setInt(3, quantite.get(Compteur));
+                stm3.setString(1,user);
+                stm3.setInt(2, idItem.get(Compteur));
+                stm3.setInt(3, quantite.get(Compteur));
                 
-                stm2.execute();
+                stm3.execute();
                 Compteur++;
-            }     
+            }
+            CallableStatement stm4=oradb.getConnexion().prepareCall("{?=call GESTIONJOUEURS.VERIFIERCASH(?)}");
+             
+            stm4.registerOutParameter(1,OracleTypes.NUMBER);
+            stm4.setString(2, user);
+            stm4.execute();
+            
+            float Ecus = stm4.getFloat(1);
+            
+            session.setAttribute("Ecus", Ecus);
         }
         catch(SQLException sqlex){ System.out.println(sqlex);} 
     }
