@@ -1,4 +1,4 @@
-﻿
+
 /*
 * To change this license header, choose License Headers in Project Properties.
 * To change this template file, choose Tools | Templates
@@ -69,6 +69,7 @@ public class Panier extends HttpServlet {
          out.println("</tr>");
          listerPanier(out);
          out.println("</table>");
+          CalculerTotal(out);
          out.println("</div>");
          out.println("</body>");
          out.println("</html>");
@@ -120,7 +121,7 @@ public class Panier extends HttpServlet {
             stm2.registerOutParameter(1, OracleTypes.NUMBER);
             stm2.setString(2, (String)session.getAttribute("User"));
             stm2.execute();
-            float Total =(float)stm2.getObject(1); //Probleme ici sa plante....
+            float Total = stm2.getFloat(1); //Probleme ici sa plante....
             
             out.println("<div>" + Total + "</div>");
             
