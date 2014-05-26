@@ -71,6 +71,9 @@ public class Panier extends HttpServlet {
             listerPanier(out);
             out.println("</table>");
             //CalculerTotal(out);
+            out.println("<div class='achat'>");
+            out.println("<br><form action=\"Acheter\" method=\"POST\"><button id=\"btnacheter\" type=\"submit\" class=\"BTN_Acheter\">Acheter</button></form>");
+            out.println("</div>");
             out.println("</div>");
             out.println("</body>");
             out.println("</html>");
