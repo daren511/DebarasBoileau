@@ -60,8 +60,19 @@ public class PanierAchat extends HttpServlet {
             stm1.execute(); 
             ResultSet rstIdItem = (ResultSet)stm1.getObject(1);
             int Compteur = 0;
+            boolean Disponible = true; 
             
             while(rstIdItem.next())
+            {
+                if(rstIdItem.getInt(3) > rstIdItem.getInt(2))
+                {
+                    Disponible=false;
+                }
+            }   
+            
+            rstIdItem.first();
+            
+            while(rstIdItem.next() && Disponible)
             {
                 idItem.add(Compteur,rstIdItem.getInt(1));
                 quantite.add(Compteur,rstIdItem.getInt(3));
