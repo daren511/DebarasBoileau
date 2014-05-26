@@ -1,8 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+﻿/*
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 
 package Panier;
 
@@ -27,9 +27,8 @@ import oracle.jdbc.OracleTypes;
  */
 @WebServlet(name = "Panier", urlPatterns = {"/Panier"})
 public class Panier extends HttpServlet {
-   private HttpSession session;
-   private double Total;
-
+    private HttpSession session;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -83,37 +82,54 @@ public class Panier extends HttpServlet {
     }
     
     protected void listerPanier(PrintWriter out){
-      try
-      {
-         //Connexion DB
-         ConnectionOracle oradb = new ConnectionOracle();
-         oradb.connecter();
-         // Déclaration
-         String sqlpanier = "select J.NOMUSAGER,P.IDITEM,NOMITEM,GENRE,PRIX,QUANTITEDISPO,QUANTITE from PANIER P INNER JOIN ITEMS I ON P.IDITEM=I.IDITEM INNER JOIN JOUEURS J ON J.IDJOUEUR=P.IDJOUEUR WHERE J.NOMUSAGER='" + session.getAttribute("User") + "'";
-         ResultSet rstTous;
-         // Lister les items
-         Statement stm2 = oradb.getConnexion().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-         rstTous = stm2.executeQuery(sqlpanier);
-         
-         rstTous.beforeFirst();
-         
-         while (rstTous.next())
-         {
-            Total = rstTous.getDouble(5) * rstTous.getDouble(7); 
-            out.println("<tr><td>"+rstTous.getString(3).toString()+"</td>"+"<td>"+rstTous.getString(4).toString()+"</td>"+"<td>"+rstTous.getString(5).toString()+"</td>"+"<td>"
-                    + rstTous.getString(6).toString()+"</td>" + "<td><form action=\"PanierModif\" method=\"POST\"><input type=number name=TB_Quantite value=" + rstTous.getString(7).toString()+ "></input></td>");
-            out.println("<td><input type=\"submit\" id=\"btnmodifier\" class=\"BTN_Modifier\" value=\"Modifier\"></input><input type=\"hidden\" value=" + rstTous.getString(2).toString()+ " name=\"Item\"></input></form>");
-             out.println("<form action=\"PanierSupp\" method=\"POST\"><input type=\"submit\" id=\"btnsupprimer\" class=\"BTN_Supprimer\" value=\"Supprimer\"></input><input type=\"hidden\" value=" + rstTous.getString(2).toString()+ " name=\"Item\"></form></td>");
-            out.println("</tr>");
-         }
-         //out.println("<div>" + Total + "</div>");
-      }
-      catch(SQLException sqlex){ System.out.println(sqlex);}   
-   }
-
+        try
+        {
+            //Connexion DB
+            ConnectionOracle oradb = new ConnectionOracle();
+            oradb.connecter();
+            CallableStatement stm1;
+            // Déclaration
+            stm1 = oradb.getConnexion().prepareCall("{? = call GESTIONPANIER.LISTERPANIER(?)}",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            
+            stm1.registerOutParameter(1, OracleTypes.CURSOR);
+            stm1.setString(2, (String)session.getAttribute("User"));
+            stm1.execute();
+            ResultSet rstTous =(ResultSet)stm1.getObject(1);
+            
+            
+            while (rstTous.next())
+            {
+                out.println("<tr><td>"+rstTous.getString(3).toString()+"</td>"+"<td>"+rstTous.getString(4).toString()+"</td>"+"<td>"+rstTous.getString(5).toString()+"</td>"+"<td>"
+                        + rstTous.getString(6).toString()+"</td>" + "<td><form action=\"PanierModif\" method=\"POST\"><input type=number name=TB_Quantite value=" + rstTous.getString(7).toString()+ "></input></td>");
+                out.println("<td><input type=\"submit\" id=\"btnmodifier\" class=\"BTN_Modifier\" value=\"Modifier\"></input><input type=\"hidden\" value=" + rstTous.getString(2).toString()+ " name=\"Item\"></input></form>");
+                out.println("<form action=\"PanierSupp\" method=\"POST\"><input type=\"submit\" id=\"btnsupprimer\" class=\"BTN_Supprimer\" value=\"Supprimer\"></input><input type=\"hidden\" value=" + rstTous.getString(2).toString()+ " name=\"Item\"></form></td>");
+                out.println("</tr>");
+            }
+        }
+        catch(SQLException sqlex){ System.out.println(sqlex);}
+    }
     
-
-
+    private void CalculerTotal(PrintWriter out){
+        try
+        {
+            ConnectionOracle oradb = new ConnectionOracle();
+            oradb.connecter();
+            // Déclaration
+            CallableStatement stm2 = oradb.getConnexion().prepareCall("{? = call GESTIONPANIER.CalculerTotal(?)}");
+            stm2.registerOutParameter(1, OracleTypes.NUMBER);
+            stm2.setString(2, (String)session.getAttribute("User"));
+            stm2.execute();
+            float Total =(float)stm2.getObject(1); //Probleme ici sa plante....
+            
+            out.println("<div>" + Total + "</div>");
+            
+        }
+        catch(SQLException sqlex){ System.out.println(sqlex);}
+    }
+    
+    
+    
+    
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -130,7 +146,7 @@ public class Panier extends HttpServlet {
         processRequest(request, response);
         System.out.println("GET");
     }
-
+    
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -144,7 +160,7 @@ public class Panier extends HttpServlet {
             throws ServletException, IOException {
         
     }
-
+    
     /**
      * Returns a short description of the servlet.
      *
@@ -154,5 +170,5 @@ public class Panier extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
 }
