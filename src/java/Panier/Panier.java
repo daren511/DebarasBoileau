@@ -43,36 +43,42 @@ public class Panier extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-         session = request.getSession();
-         out.println("<!DOCTYPE html>");
-         out.println("<html>");
-         ecrireTete(out,"Panier");
-         out.println("<body>");
-         out.println("<div class=\"Catalogue\">");
-         out.println("<a href=\"/DebarasBoileau/Catalogue\"><img src='Images/titre1.png' height='124' width='573'/></a>");
-         out.println("<div class=\"connexion\">");
-         out.println("<table><tr><td> Bienvenue à vous "+session.getAttribute("User"));
-         out.println("<br>Vous avez " +session.getAttribute("Ecus")+" Ecus");
-         out.println("<br><form action=\"logout\" method=\"GET\"><button id=\"btndeconnexion\" type=\"submit\" class=\"BTN_Deconnexion\">Se déconnecter</button></form>");
-         out.println("</table>");
-         out.println("</div>");
-         out.println("</div>");
-         out.println("<div class='Liste'>");
-         out.println("<table id='ObjectList'>");
-         out.println("<tr>");
-         out.println("<th>Nom d'item</th>");
-         out.println("<th>Genre</th>");
-         out.println("<th>Prix</th>");
-         out.println("<th>Disponible</th>");
-         out.println("<th>Quantité</th>");
-         out.println("<th></th>");
-         out.println("</tr>");
-         listerPanier(out);
-         out.println("</table>");
-          CalculerTotal(out);
-         out.println("</div>");
-         out.println("</body>");
-         out.println("</html>");
+                   /* TODO output your page here. You may use following sample code. */
+            session = request.getSession();
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            ecrireTete(out,"Panier");
+            out.println("<body>");
+            out.println("<div class=\"Catalogue\">");
+            out.println("<a href=\"/DebarasBoileau/Catalogue\"><img src='Images/titre1.png' height='124' width='573'/></a>");
+            out.println("<a href=\"/DebarasBoileau/Inventaire\"><img src='Images/Inv.jpg' height='32' width='32'/></a>");
+            out.println("<div class=\"connexion\">");
+            out.println("<table><tr><td> Bienvenue à vous "+session.getAttribute("User"));
+            out.println("<br>Vous avez " +session.getAttribute("Ecus")+" Ecus");
+            out.println("<br><form action=\"logout\" method=\"GET\"><button id=\"btndeconnexion\" type=\"submit\" class=\"BTN_Deconnexion\">Se déconnecter</button></form>");
+            out.println("</table>");
+            out.println("</div>");
+            out.println("</div>");
+            out.println("<div class='Liste'>");
+            out.println("<table id='ObjectList'>");
+            out.println("<tr>");
+            out.println("<th>Nom d'item</th>");
+            out.println("<th>Genre</th>");
+            out.println("<th>Prix</th>");
+            out.println("<th>Disponible</th>");
+            out.println("<th>Quantité</th>");
+            out.println("<th></th>");
+            out.println("</tr>");
+            listerPanier(out);
+            out.println("</table>");
+            CalculerTotal(out);
+            out.println("<div class='achat'>");
+            out.println("<br><form action=\"PanierAchat\" method=\"POST\"><button id=\"btnacheter\" type=\"submit\" class=\"BTN_Acheter\">Acheter</button></form>");
+            out.println("</div>");
+            out.println("</div>");
+            out.println("</body>");
+            out.println("</html>");
+
         }
     }
     private void ecrireTete(PrintWriter writer, String Titre){

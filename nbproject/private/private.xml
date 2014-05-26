@@ -4,9 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/201093812/Documents/GitHub/DebarasBoileau/web/Inscription.html</file>
-            <file>file:/C:/Users/201093812/Documents/GitHub/DebarasBoileau/src/java/Panier/Panier.java</file>
-            <file>file:/C:/Users/201093812/Documents/GitHub/DebarasBoileau/src/java/Catalogue/Catalogue.java</file>
             <file>file:/C:/Users/201093812/Documents/GitHub/DebarasBoileau/src/java/Inscription/Inscription.java</file>
+            <file>file:/C:/Users/201093812/Documents/GitHub/DebarasBoileau/src/java/Catalogue/Catalogue.java</file>
+            <file>file:/C:/Users/201093812/Documents/GitHub/DebarasBoileau/src/java/Panier/Panier.java</file>
+            <file>file:/C:/Users/201093812/Documents/GitHub/DebarasBoileau/src/java/PanierAjout/PanierAjout.java</file>
+            <file>file:/C:/Users/201093812/Documents/GitHub/DebarasBoileau/src/java/ConnexionUser/ConnectionOracle.java</file>
+            <file>file:/C:/Users/201093812/Documents/GitHub/DebarasBoileau/src/java/ConnexionUser/ConnexionUser.java</file>
         </group>
     </open-files>
 </project-private>
