@@ -173,25 +173,21 @@ public class Inscription extends HttpServlet {
             //Connexion
             ConnectionOracle oradb = new ConnectionOracle();
             oradb.connecter();
+            CallableStatement stm1;
             
-            // Insertion joueur
-            String sqlins = "insert into Joueurs(NOMUSAGER,NOMJOUEUR,PRENOM,MOTDEPASSE,ECUSJOUEURS) values (?,?,?,?,?)";
             
             try
             {
-               
-                PreparedStatement stmins =
-                        oradb.getConnexion().prepareStatement(sqlins);
-              
-                
+               // Insertion joueur
+               stm1 = oradb.getConnexion().prepareCall("{call GESTIONJOUEURS.INSCRIPTION(?,?,?,?,?)}",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 //Affectation
-                stmins.setString(1,username);
-                stmins.setString(2, nom);
-                stmins.setString(3,prenom);
-                stmins.setString(4, password);
-                stmins.setInt(5, nombreecus);
-                stmins.executeUpdate();
-                stmins.close();
+                stm1.setString(1,username);
+                stm1.setString(2, nom);
+                stm1.setString(3,prenom);
+                stm1.setString(4, password);
+                stm1.setInt(5, nombreecus);
+                stm1.executeUpdate();
+                stm1.close();
                 processRequestAfterInsert(request, response, etatB, textB);
                 
             }

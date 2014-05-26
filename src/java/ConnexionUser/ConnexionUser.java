@@ -28,7 +28,7 @@ import oracle.jdbc.pool.*;
 public class ConnexionUser extends HttpServlet {
    private String nomUser;
    private String motDePasse;
-   private String ecus;
+   private float ecus;
    private HttpSession session;
 
    /**
@@ -49,24 +49,27 @@ public class ConnexionUser extends HttpServlet {
    private boolean validerConnexion(String nom , String mdp){
 
             boolean siValide = false;
-            // Sql
-            String sqljoueurs = "Select NomUsager,MotDePasse,EcusJoueurs from Joueurs where NomUsager = '" +nom+ "' and MotDePasse ='"+ mdp + "'";
             //Connexion
             ConnectionOracle oradb = new ConnectionOracle();
+            CallableStatement stm1;
             oradb.connecter();
 
            try
            {
-            Statement stm = oradb.getConnexion().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
-            ResultSet rest = stm.executeQuery(sqljoueurs);
+            stm1 = oradb.getConnexion().prepareCall("{? = call GESTIONJOUEURS.CONNEXION(?,?)}",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            stm1.registerOutParameter(1, OracleTypes.CURSOR);
+            stm1.setString(2, nom);
+            stm1.setString(3, mdp);
+            stm1.execute();
             
+            ResultSet rest =(ResultSet)stm1.getObject(1);
             if(rest.first())
             {
                siValide = true;
-               ecus=Integer.toString(rest.getInt(3));
+               ecus=rest.getFloat(3);
             }
             rest.close();
-            stm.close();
+            stm1.close();
             oradb.deconnecter();
            }
            catch(SQLException se)
