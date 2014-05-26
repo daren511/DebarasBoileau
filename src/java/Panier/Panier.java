@@ -29,6 +29,7 @@ import oracle.jdbc.OracleTypes;
 @WebServlet(name = "Panier", urlPatterns = {"/Panier"})
 public class Panier extends HttpServlet {
     private HttpSession session;
+    private float Total;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,6 +46,7 @@ public class Panier extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
                    /* TODO output your page here. You may use following sample code. */
             session = request.getSession();
+            float Ecus = (float)session.getAttribute("Ecus");
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             ecrireTete(out,"Panier");
@@ -71,9 +73,15 @@ public class Panier extends HttpServlet {
             out.println("</tr>");
             listerPanier(out);
             out.println("</table>");
-            CalculerTotal(out);
+            Total = CalculerTotal(out);
             out.println("<div class='achat'>");
-            out.println("<br><form action=\"PanierAchat\" method=\"POST\"><button id=\"btnacheter\" type=\"submit\" class=\"BTN_Acheter\">Acheter</button></form>");
+            out.println(Total);
+            if(Ecus >= Total)
+            {
+                out.println("<br><form action=\"PanierAchat\" method=\"POST\"><button id=\"btnacheter\" type=\"submit\" class=\"BTN_Acheter\">Acheter</button></form>");
+            }
+            else
+                out.println("<br><form action=\"PanierAchat\" method=\"POST\"><button id=\"btnacheter\" disabled class=\"BTN_Acheter\">Acheter</button></form>");
             out.println("</div>");
             out.println("</div>");
             out.println("</body>");
@@ -118,7 +126,7 @@ public class Panier extends HttpServlet {
         catch(SQLException sqlex){ System.out.println(sqlex);}
     }
     
-    private void CalculerTotal(PrintWriter out){
+    private float CalculerTotal(PrintWriter out){
         try
         {
             ConnectionOracle oradb = new ConnectionOracle();
@@ -128,12 +136,10 @@ public class Panier extends HttpServlet {
             stm2.registerOutParameter(1, OracleTypes.NUMBER);
             stm2.setString(2, (String)session.getAttribute("User"));
             stm2.execute();
-            float Total = stm2.getFloat(1); //Probleme ici sa plante....
-            
-            out.println("<div>" + Total + "</div>");
-            
+            Total = stm2.getFloat(1);  
         }
         catch(SQLException sqlex){ System.out.println(sqlex);}
+        return Total;
     }
     
     
