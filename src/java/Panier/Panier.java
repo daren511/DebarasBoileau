@@ -1,4 +1,4 @@
-
+﻿
 /*
 * To change this license header, choose License Headers in Project Properties.
 * To change this template file, choose Tools | Templates
@@ -97,112 +97,111 @@ public class Panier extends HttpServlet {
             out.println("#" + n );
          }
          
-         if(Ecus >= Total)
-            out.println("<br><form action=\"PanierAchat\" method=\"POST\"><button id=\"btnacheter\" type=\"submit\" class=\"BTN_Acheter\">Acheter</button></form>");
-         else
-            out.println("<br><form action=\"PanierAchat\" method=\"POST\"><button id=\"btnacheter\" disabled class=\"BTN_Acheter\">Acheter</button></form>");
-         out.println("</div>");
-         out.println("</div>");
-         out.println("</body>");
-         out.println("</html>");
-         
-      }
-   }
-   private void ecrireTete(PrintWriter writer, String Titre){
-      writer.println("<head>");
-      writer.println("<meta charset=\"utf-8\" />");
-      writer.println("<title>"+Titre+"</title>");
-      writer.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"WebApp.css\">");
-      writer.println("</head>");
-   }
-   
-   protected void listerPanier(PrintWriter out){
-      try
-      {
-         
-         //Connexion DB
-         ConnectionOracle oradb = new ConnectionOracle();
-         oradb.connecter();
-         CallableStatement stm1;
-         // Déclaration
-         stm1 = oradb.getConnexion().prepareCall("{? = call GESTIONPANIER.LISTERPANIER(?)}",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-         
-         stm1.registerOutParameter(1, OracleTypes.CURSOR);
-         stm1.setString(2, (String)session.getAttribute("User"));
-         stm1.execute();
-         ResultSet rstTous =(ResultSet)stm1.getObject(1);
-         
-         
-         while (rstTous.next())
-         {
-            out.println("<tr><td>"+rstTous.getString(3).toString()+"</td>"+"<td>"+rstTous.getString(4).toString()+"</td>"+"<td>"+rstTous.getString(5).toString()+"</td>"+"<td>"
-                    + rstTous.getString(6).toString()+"</td>" + "<td><form action=\"PanierModif\" method=\"POST\"><input type=number name=TB_Quantite value=" + rstTous.getString(7).toString()+ "></input></td>");
-            out.println("<td><input type=\"submit\" id=\"btnmodifier\" class=\"BTN_Modifier\" value=\"Modifier\"></input><input type=\"hidden\" value=" + rstTous.getString(2).toString()+ " name=\"Item\"></input></form>");
-            out.println("<form action=\"PanierSupp\" method=\"POST\"><input type=\"submit\" id=\"btnsupprimer\" class=\"BTN_Supprimer\" value=\"Supprimer\"></input><input type=\"hidden\" value=" + rstTous.getString(2).toString()+ " name=\"Item\"></form></td>");
-            out.println("</tr>");
-         }
-      }
-      catch(SQLException sqlex){ System.out.println(sqlex);}
-   }
-   
-   private float CalculerTotal(PrintWriter out){
-      try
-      {
-         ConnectionOracle oradb = new ConnectionOracle();
-         oradb.connecter();
-         // Déclaration
-         CallableStatement stm2 = oradb.getConnexion().prepareCall("{? = call GESTIONPANIER.CalculerTotal(?)}");
-         stm2.registerOutParameter(1, OracleTypes.NUMBER);
-         stm2.setString(2, (String)session.getAttribute("User"));
-         stm2.execute();
-         Total = stm2.getFloat(1);
-      }
-      catch(SQLException sqlex){ System.out.println(sqlex);}
-      return Total;
-   }
-   
-   
-   
-   
-   
-   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-   /**
-    * Handles the HTTP <code>GET</code> method.
-    *
-    * @param request servlet request
-    * @param response servlet response
-    * @throws ServletException if a servlet-specific error occurs
-    * @throws IOException if an I/O error occurs
-    */
-   @Override
-   protected void doGet(HttpServletRequest request, HttpServletResponse response)
-           throws ServletException, IOException {
-      processRequest(request, response);
-      
-   }
-   
-   /**
-    * Handles the HTTP <code>POST</code> method.
-    *
-    * @param request servlet request
-    * @param response servlet response
-    * @throws ServletException if a servlet-specific error occurs
-    * @throws IOException if an I/O error occurs
-    */
-   @Override
-   protected void doPost(HttpServletRequest request, HttpServletResponse response)
-           throws ServletException, IOException {
-      
-   }
-   
-   /**
-    * Returns a short description of the servlet.
-    *
-    * @return a String containing servlet description
-    */
-   @Override
-   public String getServletInfo() {
-      return "Short description";
-   }// </editor-fold>
-   
+            if(Total == 0 || Total > Ecus)
+                out.println("<br><form action=\"PanierAchat\" method=\"POST\"><button id=\"btnacheter\" disabled class=\"BTN_Acheter\">Acheter</button></form>");
+            else
+                out.println("<br><form action=\"PanierAchat\" method=\"POST\"><button id=\"btnacheter\" type=\"submit\" class=\"BTN_Acheter\">Acheter</button></form>");
+            out.println("</div>");
+            out.println("</div>");
+            out.println("</body>");
+            out.println("</html>");
+
+        }
+    }
+    private void ecrireTete(PrintWriter writer, String Titre){
+        writer.println("<head>");
+        writer.println("<meta charset=\"utf-8\" />");
+        writer.println("<title>"+Titre+"</title>");
+        writer.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"WebApp.css\">");
+        writer.println("</head>");
+    }
+    
+    protected void listerPanier(PrintWriter out){
+        try
+        {
+           
+            //Connexion DB
+            ConnectionOracle oradb = new ConnectionOracle();
+            oradb.connecter();
+            CallableStatement stm1;
+            // Déclaration
+            stm1 = oradb.getConnexion().prepareCall("{? = call GESTIONPANIER.LISTERPANIER(?)}",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            
+            stm1.registerOutParameter(1, OracleTypes.CURSOR);
+            stm1.setString(2, (String)session.getAttribute("User"));
+            stm1.execute();
+            ResultSet rstTous =(ResultSet)stm1.getObject(1);
+            
+            
+            while (rstTous.next())
+            {
+                out.println("<tr><td>"+rstTous.getString(3).toString()+"</td>"+"<td>"+rstTous.getString(4).toString()+"</td>"+"<td>"+rstTous.getString(5).toString()+"</td>"+"<td>"
+                        + rstTous.getString(6).toString()+"</td>" + "<td><form action=\"PanierModif\" method=\"POST\"><input type=number name=TB_Quantite value=" + rstTous.getString(7).toString()+ "></input></td>");
+                out.println("<td><input type=\"submit\" id=\"btnmodifier\" class=\"BTN_Modifier\" value=\"Modifier\"></input><input type=\"hidden\" value=" + rstTous.getString(2).toString()+ " name=\"Item\"></input></form>");
+                out.println("<form action=\"PanierSupp\" method=\"POST\"><input type=\"submit\" id=\"btnsupprimer\" class=\"BTN_Supprimer\" value=\"Supprimer\"></input><input type=\"hidden\" value=" + rstTous.getString(2).toString()+ " name=\"Item\"></form></td>");
+                out.println("</tr>");
+            }
+        }
+        catch(SQLException sqlex){ System.out.println(sqlex);}
+    }
+    
+    private float CalculerTotal(PrintWriter out){
+        try
+        {
+            ConnectionOracle oradb = new ConnectionOracle();
+            oradb.connecter();
+            // Déclaration
+            CallableStatement stm2 = oradb.getConnexion().prepareCall("{? = call GESTIONPANIER.CalculerTotal(?)}");
+            stm2.registerOutParameter(1, OracleTypes.NUMBER);
+            stm2.setString(2, (String)session.getAttribute("User"));
+            stm2.execute();
+            Total = stm2.getFloat(1);  
+        }
+        catch(SQLException sqlex){ System.out.println(sqlex);}
+        return Total;
+    }
+    
+    
+    
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+    
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+    }
+    
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+    
 }

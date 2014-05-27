@@ -200,7 +200,7 @@ public class Catalogue extends HttpServlet {
                 
                 out.println("<tr><td>"+rst.getString(2).toString()+"</td>"+"<td>"+rst.getString(5).toString()+"</td>"+"<td>"+rst.getString(3).toString()+"</td>"+"<td>"
                         + rst.getString(4).toString()+"</td>");
-                out.println("<td><form action=\"InfoItem\" method=\"POST\"><input type=\"hidden\" name=\"Item\" value="+ rst.getString(1) +" /><input type=\"hidden\" name=\"Genre\" value="+ rst.getString(5) +" /><button id=\"btninfo\" type=\"submit\" class=\"BTN_Info\">Infomation</button></form></td>");
+                out.println("<td><form action=\"InfoItem\" method=\"POST\"><input type=\"hidden\" name=\"Item\" value="+ rst.getString(1) +" /><input type=\"hidden\" name=\"Genre\" value="+ rst.getString(5) +" /><button id=\"btninfo\" type=\"submit\" class=\"BTN_Info\">Information</button></form></td>");
                 if( session.getAttribute("User") != null)
                 {
                     out.println("<td><form action=\"PanierAjout\" method=\"POST\"><input type=\"hidden\" name=\"Item\" value="+ rst.getString(1) +" /><button id=\"btnajouter\" type=\"submit\" class=\"BTN_Ajouter\">Ajouter Au Panier</button></form></td>");
