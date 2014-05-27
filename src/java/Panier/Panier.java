@@ -87,7 +87,7 @@ public class Panier extends HttpServlet {
          }
          else if(Status.equals("error"))
          {
-            out.println("Votre achat got derp");
+            out.println("Erreur, Vous essayer surment d'acheter plsu que la quantite disponible ,");
             out.println("Total du Panier: " + Total + " Ecus");
             if(Total == 0 || Total > Ecus)
                 out.println("<br><form action=\"PanierAchat\" method=\"POST\"><button id=\"btnacheter\" disabled class=\"BTN_Acheter\">Acheter</button></form>");

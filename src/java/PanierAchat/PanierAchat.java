@@ -71,6 +71,7 @@ public class PanierAchat extends HttpServlet {
                 if(rstIdItem.getInt(3) > rstIdItem.getInt(2))
                 {
                     Disponible=false;
+                    return false;
                 }
             }   
             
@@ -105,7 +106,7 @@ public class PanierAchat extends HttpServlet {
             
             session.setAttribute("Ecus", Ecus);
         }
-        catch(SQLException sqlex){ System.out.println(sqlex);} 
+        catch(SQLException sqlex){ System.out.println(sqlex); return false;} 
         return true;
     }
 
