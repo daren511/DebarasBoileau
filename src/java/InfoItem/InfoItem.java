@@ -50,10 +50,8 @@ public class InfoItem extends HttpServlet {
             out.println("<body>");
             out.println("<div class=\"Info\">");
             out.println("<a href=\"/DebarasBoileau/Catalogue\"><img src='Images/titre1.png' height='124' width='573'/></a>");
-            out.println("<div class='Liste'>");
             out.println("<div class='InfoItem'>");
             Information(out,idItem,Genre);
-            out.println("</div>");
             out.println("</div>");
             out.println("</body>");
             out.println("</html>");
@@ -99,6 +97,9 @@ public class InfoItem extends HttpServlet {
             ResultSet rstArmes =(ResultSet)stm1.getObject(1);
             rstArmes.next();
             
+            
+            out.println("<img class='ImageInfo' src='Images/Armes.png' height='80' width='80' />");
+            out.println("<br>");
             out.println("Nom d'item: " + rstArmes.getString(1));
             out.println("<br>");
             out.println("Genre: " + rstArmes.getString(2));
@@ -127,6 +128,8 @@ public class InfoItem extends HttpServlet {
             ResultSet rstArmures =(ResultSet)stm2.getObject(1);
             rstArmures.next();
             
+            out.println("<img class='ImageInfo' src='Images/Armures.png' height='80' width='80' />");
+            out.println("<br>");
             out.println("Nom d'item: " + rstArmures.getString(1));
             out.println("<br>");
             out.println("Genre: " + rstArmures.getString(2));
@@ -159,6 +162,8 @@ public class InfoItem extends HttpServlet {
             ResultSet rstPotions =(ResultSet)stm3.getObject(1);
             rstPotions.next();
             
+            out.println("<img class='ImageInfo' src='Images/Potions.png' height='80' width='80' />");
+            out.println("<br>");
             out.println("Nom d'item: " + rstPotions.getString(1));
             out.println("<br>");
             out.println("Genre: " + rstPotions.getString(2));
@@ -187,6 +192,8 @@ public class InfoItem extends HttpServlet {
             ResultSet rstHabiletes =(ResultSet)stm4.getObject(1);
             rstHabiletes.next();
             
+            out.println("<img class='ImageInfo' src='Images/habilite.png' height='70' width='70' />");
+            out.println("<br>");
             out.println("Nom d'item: " + rstHabiletes.getString(1).toString());
             out.println("<br>");
             out.println("Genre: " + rstHabiletes.getString(2).toString());
