@@ -41,6 +41,7 @@ public class Catalogue extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             session = request.getSession();
             String Status = request.getParameter("Status");
+            String Ajout = request.getParameter("Ajout");
             
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -71,6 +72,17 @@ public class Catalogue extends HttpServlet {
             out.println("<th>Genre</th>");
             out.println("<th>Prix</th>");
             out.println("<th>Quantité disponible</th>");
+            if(Ajout !=null)
+            {
+            if(Ajout.equals("ok"))
+            {
+               out.println("<th id=ItemAjout>Item ajouté !</th>");
+            }
+            else if(Ajout.equals("error"))
+            {
+               out.println("<th id=ItemAjout>Ajout d'item échoué</th>");
+            }
+            }
             out.println("</tr>");
             listerTous(out,request);
             out.println("</table>");
@@ -103,6 +115,7 @@ public class Catalogue extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             session = request.getSession();
             String Status = request.getParameter("Status");
+            String Ajout = request.getParameter("Ajout");
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -131,6 +144,17 @@ public class Catalogue extends HttpServlet {
             out.println("<th>Genre</th>");
             out.println("<th>Prix</th>");
             out.println("<th>Quantité disponible</th>");
+            if(Ajout !=null)
+            {
+            if(Ajout.equals("ok"))
+            {
+               out.println("<th id=ItemAjout>Item ajouté !</th>");
+            }
+            else if(Ajout.equals("error"))
+            {
+               out.println("<th id=ItemAjout>Ajout d'item échoué</th>");
+            }
+            }
             out.println("</tr>");
             listerParGenre(genre, out,request);
             out.println("</table>");
@@ -216,6 +240,7 @@ public class Catalogue extends HttpServlet {
                 if( session.getAttribute("User") != null)
                 {
                     out.println("<td><form action=\"PanierAjout\" method=\"POST\"><input type=\"hidden\" name=\"Item\" value="+ rst.getString(1) +" /><button id=\"btnajouter\" type=\"submit\" class=\"BTN_Ajouter\">Ajouter Au Panier</button></form></td>");
+                    
                 }
                 out.println("</tr>");
             }

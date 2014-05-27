@@ -41,12 +41,14 @@ public class PanierAjout extends HttpServlet {
         session = request.getSession();
         int idItem = Integer.parseInt(request.getParameter("Item"));
         String user = (String)session.getAttribute("User");
-        Ajouter(idItem,user);
-        
-        response.sendRedirect("http://localhost:8084/DebarasBoileau/Catalogue");
+        boolean verif=Ajouter(idItem,user);
+        if(verif)
+         response.sendRedirect("http://localhost:8084/DebarasBoileau/Catalogue?Ajout=ok"); 
+        else
+         response.sendRedirect("http://localhost:8084/DebarasBoileau/Catalogue?Ajout=error");  
     }
     
-     private void Ajouter(int idItem,String user){
+     private boolean Ajouter(int idItem,String user){
         try
         {
             ConnectionOracle oradb = new ConnectionOracle();
@@ -59,7 +61,8 @@ public class PanierAjout extends HttpServlet {
             
             stm1.executeUpdate(); 
         }
-        catch(SQLException sqlex){ System.out.println(sqlex);} 
+        catch(SQLException sqlex){ System.out.println(sqlex); return false;} 
+        return true;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
