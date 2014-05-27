@@ -82,11 +82,19 @@ public class Panier extends HttpServlet {
          if(Status==null)
          {
             out.println("Total du Panier: " + Total + " Ecus");
+            if(Total == 0 || Total > Ecus)
+                out.println("<br><form action=\"PanierAchat\" method=\"POST\"><button id=\"btnacheter\" disabled class=\"BTN_Acheter\">Acheter</button></form>");
+            else
+                out.println("<br><form action=\"PanierAchat\" method=\"POST\"><button id=\"btnacheter\" type=\"submit\" class=\"BTN_Acheter\">Acheter</button></form>");
          }
          else if(Status.equals("error"))
          {
             out.println("Votre achat got derp");
             out.println("Total du Panier: " + Total + " Ecus");
+            if(Total == 0 || Total > Ecus)
+                out.println("<br><form action=\"PanierAchat\" method=\"POST\"><button id=\"btnacheter\" disabled class=\"BTN_Acheter\">Acheter</button></form>");
+            else
+                out.println("<br><form action=\"PanierAchat\" method=\"POST\"><button id=\"btnacheter\" type=\"submit\" class=\"BTN_Acheter\">Acheter</button></form>");
          }
          else if(Status.equals("ok"))
          {
@@ -96,11 +104,6 @@ public class Panier extends HttpServlet {
             out.println("Votre achat est confirmé ");
             out.println("#" + n );
          }
-         
-            if(Total == 0 || Total > Ecus)
-                out.println("<br><form action=\"PanierAchat\" method=\"POST\"><button id=\"btnacheter\" disabled class=\"BTN_Acheter\">Acheter</button></form>");
-            else
-                out.println("<br><form action=\"PanierAchat\" method=\"POST\"><button id=\"btnacheter\" type=\"submit\" class=\"BTN_Acheter\">Acheter</button></form>");
             out.println("</div>");
             out.println("</div>");
             out.println("</body>");
