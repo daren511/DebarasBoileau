@@ -76,11 +76,11 @@ public class Catalogue extends HttpServlet {
             {
             if(Ajout.equals("ok"))
             {
-               out.println("<th id=ItemAjout>Item ajouté !</th>");
+               out.println("<th colspan=\"2\">Item ajouté !</th>");
             }
             else if(Ajout.equals("error"))
             {
-               out.println("<th id=ItemAjout>Ajout d'item échoué</th>");
+               out.println("<th colspan=\"2\">Ajout d'item échoué</th>");
             }
             }
             out.println("</tr>");
@@ -148,11 +148,11 @@ public class Catalogue extends HttpServlet {
             {
             if(Ajout.equals("ok"))
             {
-               out.println("<th id=ItemAjout>Item ajouté !</th>");
+               out.println("<th colspan=\"2\">Item ajouté !</th>");
             }
             else if(Ajout.equals("error"))
             {
-               out.println("<th id=ItemAjout>Ajout d'item échoué</th>");
+               out.println("<th colspan=\"2\">Ajout d'item échoué</th>");
             }
             }
             out.println("</tr>");
