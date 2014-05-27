@@ -41,12 +41,16 @@ public class PanierAchat extends HttpServlet {
         ArrayList<Integer> idItem = new ArrayList();
         ArrayList<Integer> quantite = new ArrayList();
         String user = (String)session.getAttribute("User");
-        Acheter(idItem,user,quantite);
         
-        response.sendRedirect("http://localhost:8084/DebarasBoileau/Panier");
+        boolean verifachat =Acheter(idItem,user,quantite);
+        if(verifachat)
+         response.sendRedirect("http://localhost:8084/DebarasBoileau/Panier?Status=ok");
+        else
+         response.sendRedirect("http://localhost:8084/DebarasBoileau/Panier?Status=error"); 
+        
     }
     
-     private void Acheter(ArrayList<Integer> idItem,String user, ArrayList<Integer> quantite){
+     private boolean Acheter(ArrayList<Integer> idItem,String user, ArrayList<Integer> quantite){
         try
         {
             ConnexionUser.ConnectionOracle oradb = new ConnexionUser.ConnectionOracle();
@@ -102,6 +106,7 @@ public class PanierAchat extends HttpServlet {
             session.setAttribute("Ecus", Ecus);
         }
         catch(SQLException sqlex){ System.out.println(sqlex);} 
+        return true;
     }
 
 
@@ -132,6 +137,7 @@ public class PanierAchat extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+       
     }
 
     /**
