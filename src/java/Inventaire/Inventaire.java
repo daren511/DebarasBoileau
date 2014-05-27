@@ -49,11 +49,11 @@ public class Inventaire extends HttpServlet {
             out.println("<div class=\"Catalogue\">");
             out.println("<a href=\"/DebarasBoileau/Catalogue\"><img src='Images/titre1.png' height='124' width='573'/></a>");
             out.println("<div class=\"connexion\">");
+            out.println("<a href=\"/DebarasBoileau/Panier\"><img src='Images/Panier.png'  height='32' width='32'></a>");
             out.println("<table><tr><td> Bienvenue à vous "+session.getAttribute("User"));
             out.println("<br>Vous avez " +session.getAttribute("Ecus")+" Ecus");
             out.println("<br><form action=\"logout\" method=\"GET\"><button id=\"btndeconnexion\" type=\"submit\" class=\"BTN_Deconnexion\">Se déconnecter</button></form>");
             out.println("</table>");
-            out.println("</div>");
             out.println("</div>");
             out.println("<div class='Liste'>");
             out.println("<table id='ObjectList'>");
@@ -99,7 +99,6 @@ public class Inventaire extends HttpServlet {
                 out.println("<tr><td>"+rstTous.getString(3).toString()+"</td>"+"<td>"+rstTous.getString(4).toString()+"</td>"+"<td>"+rstTous.getString(5).toString()+"</td>"+"<td>"
                         + rstTous.getString(6).toString()+"</td>");
             }
-            //out.println("<div>" + Total + "</div>");
         }
     catch(SQLException sqlex){ System.out.println(sqlex);}
 }

@@ -65,8 +65,22 @@ div.Catalogue
    margin-right:auto;
    margin-top:auto;
    border-style:solid;
-   height:1200px;
-   width:1200px;
+   height:1100px;
+   width:1300px;
+   border-radius:25px;
+   background-color:rgba(255,255,255,0.8);
+   overflow:auto;
+}
+
+div.Info
+{
+   background-color:white;
+   margin-left:auto;
+   margin-right:auto;
+   margin-top:auto;
+   border-style:solid;
+   height:500px;
+   width:1300px;
    border-radius:25px;
    background-color:rgba(255,255,255,0.8);
 }
@@ -108,15 +122,13 @@ table#ObjectList tr td
 
 img
 {
-    position:absolute;
-    top:2%;
     text-align:center;
     left:15%;
 }
 
 .achat
 {
-   width:1px;
+   width:200px;
    margin-left: auto ;
    margin-right: auto ;
 }

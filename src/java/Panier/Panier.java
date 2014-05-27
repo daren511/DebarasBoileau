@@ -53,13 +53,12 @@ public class Panier extends HttpServlet {
             out.println("<body>");
             out.println("<div class=\"Catalogue\">");
             out.println("<a href=\"/DebarasBoileau/Catalogue\"><img src='Images/titre1.png' height='124' width='573'/></a>");
-            out.println("<a href=\"/DebarasBoileau/Inventaire\"><img src='Images/Inv.jpg' height='32' width='32'/></a>");
             out.println("<div class=\"connexion\">");
+            out.println("<a href=\"/DebarasBoileau/Inventaire\"><img src='Images/Inv.jpg' height='32' width='32'/></a>");
             out.println("<table><tr><td> Bienvenue à vous "+session.getAttribute("User"));
             out.println("<br>Vous avez " +session.getAttribute("Ecus")+" Ecus");
             out.println("<br><form action=\"logout\" method=\"GET\"><button id=\"btndeconnexion\" type=\"submit\" class=\"BTN_Deconnexion\">Se déconnecter</button></form>");
             out.println("</table>");
-            out.println("</div>");
             out.println("</div>");
             out.println("<div class='Liste'>");
             out.println("<table id='ObjectList'>");
@@ -75,11 +74,9 @@ public class Panier extends HttpServlet {
             out.println("</table>");
             Total = CalculerTotal(out);
             out.println("<div class='achat'>");
-            out.println(Total);
+            out.println("Total du Panier: " + Total + " Ecus");
             if(Ecus >= Total)
-            {
                 out.println("<br><form action=\"PanierAchat\" method=\"POST\"><button id=\"btnacheter\" type=\"submit\" class=\"BTN_Acheter\">Acheter</button></form>");
-            }
             else
                 out.println("<br><form action=\"PanierAchat\" method=\"POST\"><button id=\"btnacheter\" disabled class=\"BTN_Acheter\">Acheter</button></form>");
             out.println("</div>");

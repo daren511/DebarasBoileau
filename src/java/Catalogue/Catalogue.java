@@ -49,9 +49,9 @@ public class Catalogue extends HttpServlet {
             out.println("<div class=\"Catalogue\">");
             out.println("<img src='Images/titre1.png' height='124' width='573'/></a>");
             out.println("<div class=\"connexion\">");
-            out.println("<div class=\"connexionIMG\">");
+            //out.println("<div class=\"connexionIMG\">");
             panierOuInscription(out);
-            out.println("</div>");
+            //out.println("</div>");
             if( session.getAttribute("User") == null)
                 out.println("<form action=\"ConnexionUser\" method=\"POST\">");
             else
@@ -70,10 +70,6 @@ public class Catalogue extends HttpServlet {
             out.println("<th>Genre</th>");
             out.println("<th>Prix</th>");
             out.println("<th>Quantité disponible</th>");
-            if( session.getAttribute("User") != null)
-            {
-                out.println("<th></th>");
-            }
             out.println("</tr>");
             listerTous(out,request);
             out.println("</table>");
@@ -117,10 +113,8 @@ public class Catalogue extends HttpServlet {
             panierOuInscription(out);
             if( session.getAttribute("User") == null)
                 out.println("<form action=\"ConnexionUser\" method=\"POST\">");
-            
             else
                 out.println("<form action=\"logout\" method=\"POST\">");
-            
             out.println("<table>");
             ecrireConn(out, session, request);
             out.println("</table>");
@@ -135,10 +129,6 @@ public class Catalogue extends HttpServlet {
             out.println("<th>Genre</th>");
             out.println("<th>Prix</th>");
             out.println("<th>Quantité disponible</th>");
-            if( session.getAttribute("User") != null)
-            {
-                out.println("<th></th>");
-            }
             out.println("</tr>");
             listerParGenre(genre, out,request);
             out.println("</table>");
@@ -210,6 +200,7 @@ public class Catalogue extends HttpServlet {
                 
                 out.println("<tr><td>"+rst.getString(2).toString()+"</td>"+"<td>"+rst.getString(5).toString()+"</td>"+"<td>"+rst.getString(3).toString()+"</td>"+"<td>"
                         + rst.getString(4).toString()+"</td>");
+                out.println("<td><form action=\"InfoItem\" method=\"POST\"><input type=\"hidden\" name=\"Item\" value="+ rst.getString(1) +" /><input type=\"hidden\" name=\"Genre\" value="+ rst.getString(5) +" /><button id=\"btninfo\" type=\"submit\" class=\"BTN_Info\">Infomation</button></form></td>");
                 if( session.getAttribute("User") != null)
                 {
                     out.println("<td><form action=\"PanierAjout\" method=\"POST\"><input type=\"hidden\" name=\"Item\" value="+ rst.getString(1) +" /><button id=\"btnajouter\" type=\"submit\" class=\"BTN_Ajouter\">Ajouter Au Panier</button></form></td>");
@@ -222,10 +213,13 @@ public class Catalogue extends HttpServlet {
     
     
     private void panierOuInscription(PrintWriter out){
-        if( session.getAttribute("User") != null)
+        if( session.getAttribute("User") != null){
             out.println("<tr><td><a href=\"/DebarasBoileau/Panier\"><img src='Images/Panier.png'  height='32' width='32'></a></td></tr>");
-        else
+            out.println("<a href=\"/DebarasBoileau/Inventaire\"><img src='Images/Inv.jpg' height='32' width='32'/></a>");
+        }
+        else{
             out.println("<tr><td><a href=\"/DebarasBoileau/Inscription\"><img src='Images/Inscription.png'  height='32' width='32'></a></td></tr>");
+        }
     }
     protected void listerParGenre(String genre ,PrintWriter out,HttpServletRequest request){
         try
