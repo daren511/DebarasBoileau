@@ -56,7 +56,7 @@ public class Inventaire extends HttpServlet {
             out.println("</table>");
             out.println("</div>");
             out.println("<div class='Liste'>");
-            out.println("<table id='ObjectList'>");
+            out.println("<table id='ObjectList' style=\"margin-left: 200px;\">");
             out.println("<tr>");
             out.println("<th>Nom d'item</th>");
             out.println("<th>Genre</th>");

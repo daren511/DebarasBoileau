@@ -51,9 +51,9 @@ public class InfoItem extends HttpServlet {
             out.println("<div class=\"Info\">");
             out.println("<a href=\"/DebarasBoileau/Catalogue\"><img src='Images/titre1.png' height='124' width='573'/></a>");
             out.println("<div class='Liste'>");
-            out.println("<table id='ObjectList'>");
+            out.println("<div class='InfoItem'>");
             Information(out,idItem,Genre);
-            out.println("</table>");
+            out.println("</div>");
             out.println("</div>");
             out.println("</body>");
             out.println("</html>");
@@ -80,9 +80,9 @@ public class InfoItem extends HttpServlet {
         {
             Potions(out,idItem);
         }
-        else if(Genre.equals("Habiletes"))
+        else if(Genre.equals("Habilites"))
         {
-            Habiletes(out,idItem);
+            Habilites(out,idItem);
         }
     }
     
@@ -97,21 +97,19 @@ public class InfoItem extends HttpServlet {
             stm1.setInt(2, idItem);
             stm1.execute();
             ResultSet rstArmes =(ResultSet)stm1.getObject(1);
+            rstArmes.next();
             
-            out.println("<tr>");
-            out.println("<th>Nom d'item</th>");
-            out.println("<th>Genre</th>");
-            out.println("<th>Prix</th>");
-            out.println("<th>Quantité</th>");
-            out.println("<th>Efficacité</th>");
-            out.println("<th>Dégats</th>");
-            out.println("</tr>");
-            
-            while (rstArmes.next())
-            {
-                out.println("<tr><td>"+rstArmes.getString(1).toString()+"</td>"+"<td>"+rstArmes.getString(2).toString()+"</td>"+"<td>"+rstArmes.getString(3).toString()+"</td>"+"<td>"
-                        + rstArmes.getString(4).toString()+"</td><td>"+rstArmes.getString(5).toString()+"</td><td>"+rstArmes.getString(6).toString()+"</td></tr>");
-            }
+            out.println("Nom d'item: " + rstArmes.getString(1));
+            out.println("<br>");
+            out.println("Genre: " + rstArmes.getString(2));
+            out.println("<br>");
+            out.println("Prix: " + rstArmes.getString(3));
+            out.println("<br>");
+            out.println("Qts Dispo: " + rstArmes.getString(4));
+            out.println("<br>");
+            out.println("Efficacité: " + rstArmes.getString(5));
+            out.println("<br>");
+            out.println("Dégats: " + rstArmes.getString(6));
         }
         catch(SQLException sqlex){ System.out.println(sqlex);}
     }
@@ -121,30 +119,29 @@ public class InfoItem extends HttpServlet {
         {
             ConnectionOracle oradb = new ConnectionOracle();
             oradb.connecter();
-            CallableStatement stm2 = oradb.getConnexion().prepareCall("{? = call GESTIONARMURES.GETINFOS(?)}",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            CallableStatement stm2 = oradb.getConnexion().prepareCall("{? = call GESTIONARMURE.GETINFOS(?)}",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             
             stm2.registerOutParameter(1, OracleTypes.CURSOR);
             stm2.setInt(2, idItem);
             stm2.execute();
             ResultSet rstArmures =(ResultSet)stm2.getObject(1);
+            rstArmures.next();
             
-            out.println("<tr>");
-            out.println("<th>Nom d'item</th>");
-            out.println("<th>Genre</th>");
-            out.println("<th>Prix</th>");
-            out.println("<th>Quantité</th>");
-            out.println("<th>Efficacité</th>");
-            out.println("<th>Matière</th>");
-            out.println("<th>Taille</th>");
-            out.println("<th>Poids</th>");
-            out.println("</tr>");
-            
-            while (rstArmures.next())
-            {
-                out.println("<tr><td>"+rstArmures.getString(1).toString()+"</td>"+"<td>"+rstArmures.getString(2).toString()+"</td>"+"<td>"+rstArmures.getString(3).toString()+"</td>"+"<td>"
-                        + rstArmures.getString(4).toString()+"</td><td>"+rstArmures.getString(5).toString()+"</td><td>"+rstArmures.getString(6).toString()
-                        + "</td><td>"+rstArmures.getString(7).toString()+"</td><td>"+rstArmures.getString(8).toString()+"</td></tr>");
-            }
+            out.println("Nom d'item: " + rstArmures.getString(1));
+            out.println("<br>");
+            out.println("Genre: " + rstArmures.getString(2));
+            out.println("<br>");
+            out.println("Prix: " + rstArmures.getString(3));
+            out.println("<br>");
+            out.println("Qts Dispo: " + rstArmures.getString(4));
+            out.println("<br>");
+            out.println("Efficacité: " + rstArmures.getString(5));
+            out.println("<br>");
+            out.println("Matière: " + rstArmures.getString(6));
+            out.println("<br>");
+            out.println("Taille: " + rstArmures.getString(7));
+            out.println("<br>");
+            out.println("Poids: " + rstArmures.getString(8));
         }
         catch(SQLException sqlex){ System.out.println(sqlex);}
     }
@@ -160,26 +157,24 @@ public class InfoItem extends HttpServlet {
             stm3.setInt(2, idItem);
             stm3.execute();
             ResultSet rstPotions =(ResultSet)stm3.getObject(1);
+            rstPotions.next();
             
-            out.println("<tr>");
-            out.println("<th>Nom d'item</th>");
-            out.println("<th>Genre</th>");
-            out.println("<th>Prix</th>");
-            out.println("<th>Quantité</th>");
-            out.println("<th>Effet</th>");
-            out.println("<th>Durée Effet</th>");
-            out.println("</tr>");
-            
-            while (rstPotions.next())
-            {
-                out.println("<tr><td>"+rstPotions.getString(1).toString()+"</td>"+"<td>"+rstPotions.getString(2).toString()+"</td>"+"<td>"+rstPotions.getString(3).toString()+"</td>"+"<td>"
-                        + rstPotions.getString(4).toString()+"</td><td>"+rstPotions.getString(5).toString()+"</td><td>"+rstPotions.getString(6).toString() + "</td></tr>");
-            }
+            out.println("Nom d'item: " + rstPotions.getString(1));
+            out.println("<br>");
+            out.println("Genre: " + rstPotions.getString(2));
+            out.println("<br>");
+            out.println("Prix: " + rstPotions.getString(3));
+            out.println("<br>");
+            out.println("Qts Dispo: " + rstPotions.getString(4));
+            out.println("<br>");
+            out.println("Effet: " + rstPotions.getString(5));
+            out.println("<br>");
+            out.println("Durée Effet: " + rstPotions.getString(6));
         }
         catch(SQLException sqlex){ System.out.println(sqlex);}
     }
     
-    private void Habiletes(PrintWriter out,int idItem){
+    private void Habilites(PrintWriter out,int idItem){
         try
         {
             ConnectionOracle oradb = new ConnectionOracle();
@@ -190,13 +185,17 @@ public class InfoItem extends HttpServlet {
             stm4.setInt(2, idItem);
             stm4.execute();
             ResultSet rstHabiletes =(ResultSet)stm4.getObject(1);
+            rstHabiletes.next();
             
-            
-            while (rstHabiletes.next())
-            {
-                out.println("<tr><td>"+rstHabiletes.getString(1).toString()+"</td>"+"<td>"+rstHabiletes.getString(2).toString()+"</td>"+"<td>"+rstHabiletes.getString(3).toString()+"</td>"+"<td>"
-                        + rstHabiletes.getString(4).toString()+"</td><td>"+rstHabiletes.getString(5).toString()+"</td></tr>");
-            }
+            out.println("Nom d'item: " + rstHabiletes.getString(1).toString());
+            out.println("<br>");
+            out.println("Genre: " + rstHabiletes.getString(2).toString());
+            out.println("<br>");
+            out.println("Prix: " + rstHabiletes.getString(3).toString());
+            out.println("<br>");
+            out.println("Qts Dispo: " + rstHabiletes.getString(4).toString());
+            out.println("<br>");
+            out.println("Description: " + rstHabiletes.getString(5).toString());
         }
         catch(SQLException sqlex){ System.out.println(sqlex);}
     }

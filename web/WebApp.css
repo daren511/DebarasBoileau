@@ -80,9 +80,16 @@ div.Info
    margin-top:auto;
    border-style:solid;
    height:500px;
-   width:1300px;
+   width:600px;
    border-radius:25px;
    background-color:rgba(255,255,255,0.8);
+}
+
+div.InfoItem{
+   font-size:22px;
+   margin-left:160px;
+   margin-right:auto;
+   width:300px;
 }
 
 #btnconnexion

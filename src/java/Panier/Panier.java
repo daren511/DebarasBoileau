@@ -75,10 +75,10 @@ public class Panier extends HttpServlet {
             Total = CalculerTotal(out);
             out.println("<div class='achat'>");
             out.println("Total du Panier: " + Total + " Ecus");
-            if(Ecus >= Total)
-                out.println("<br><form action=\"PanierAchat\" method=\"POST\"><button id=\"btnacheter\" type=\"submit\" class=\"BTN_Acheter\">Acheter</button></form>");
-            else
+            if(Total == 0 || Total > Ecus)
                 out.println("<br><form action=\"PanierAchat\" method=\"POST\"><button id=\"btnacheter\" disabled class=\"BTN_Acheter\">Acheter</button></form>");
+            else
+                out.println("<br><form action=\"PanierAchat\" method=\"POST\"><button id=\"btnacheter\" type=\"submit\" class=\"BTN_Acheter\">Acheter</button></form>");
             out.println("</div>");
             out.println("</div>");
             out.println("</body>");
