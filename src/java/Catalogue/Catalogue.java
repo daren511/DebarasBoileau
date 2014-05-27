@@ -150,7 +150,7 @@ public class Catalogue extends HttpServlet {
     }
     private void ecrireConn(PrintWriter out , HttpSession session , HttpServletRequest request,String Status) {
         session = request.getSession();
-        if( session.getAttribute("User") == null)
+        if( Status == null)
         {
             out.println("<tr><td> Nom d'usager : </td><td> <input id=\"Username\" type=\"text\" class=\"Text_Box\" name=\"User\" /> </td></tr>");
             out.println("<tr><td> Mot de passe : </td><td> <input id=\"Password\" type=\"password\" class=\"Text_Box\" name=\"Password\" /> </td></tr>");
@@ -166,10 +166,10 @@ public class Catalogue extends HttpServlet {
            }
            if(Status.equals("error"))
            {
-            out.println("<tr><td> Nom d'usager : </td><td> <input id=\"Username\" type=\"text\" class=\"Text_Box\" name=\"User\" /> </td></tr>");
-            out.println("<tr><td> Mot de passe : </td><td> <input id=\"Password\" type=\"password\" class=\"Text_Box\" name=\"Password\" /> </td></tr>");
+            out.println("<tr><td> Nom d'usager : <input id=\"Username\" type=\"text\" class=\"Text_Box\" name=\"User\" /> </td></tr>");
+            out.println("<tr><td> Mot de passe : <input id=\"Password\" type=\"password\" class=\"Text_Box\" name=\"Password\" /> </td></tr>");
             out.println("<tr><td><button id=\"btnconnexion\" type=\"submit\" class=\"BTN_Connexion\">Se connecter</button></td></tr>");
-            out.println("<tr><td> Erreur de connexion , l'un des champs est invalide</td></tr>");
+            out.println("<tr><td> Erreur de connexion ,</td></tr><tr><td> l'un des champs est invalide</td></tr>");
            }
         }
         
