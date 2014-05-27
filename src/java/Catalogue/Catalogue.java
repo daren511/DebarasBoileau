@@ -291,11 +291,6 @@ public class Catalogue extends HttpServlet {
         String genre = request.getParameter("Genre");
         //avertit le navigateur qu'il va recevoir du code HTML
         response.setContentType("text/html;charset=UTF-8");
-        
-        //Flux ecriture
-        PrintWriter out = response.getWriter();
-        try
-        {
             if(genre.equals("Tous"))
             {
                 processRequestTous(request, response);
@@ -304,11 +299,7 @@ public class Catalogue extends HttpServlet {
             {
                 processRequestGenre(request, response, genre);
             }
-        }
-        finally
-        {
-            out.close();
-        }
+        
     }
     
     /**
