@@ -40,6 +40,7 @@ public class Catalogue extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             session = request.getSession();
+            String Status = request.getParameter("Status");
             
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -57,7 +58,7 @@ public class Catalogue extends HttpServlet {
             else
                 out.println("<form action=\"logout\" method=\"POST\">");
             out.println("<table>");
-            ecrireConn(out, session, request);
+            ecrireConn(out, session, request,Status);
             out.println("</table>");
             out.println("</br>");
             out.println("</form>");
@@ -101,6 +102,7 @@ public class Catalogue extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             session = request.getSession();
+            String Status = request.getParameter("Status");
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -116,7 +118,7 @@ public class Catalogue extends HttpServlet {
             else
                 out.println("<form action=\"logout\" method=\"POST\">");
             out.println("<table>");
-            ecrireConn(out, session, request);
+            ecrireConn(out, session, request,Status);
             out.println("</table>");
             out.println("</br>");
             out.println("</form>");
@@ -146,7 +148,7 @@ public class Catalogue extends HttpServlet {
         writer.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"WebApp.css\">");
         writer.println("</head>");
     }
-    private void ecrireConn(PrintWriter out , HttpSession session , HttpServletRequest request) {
+    private void ecrireConn(PrintWriter out , HttpSession session , HttpServletRequest request,String Status) {
         session = request.getSession();
         if( session.getAttribute("User") == null)
         {
@@ -156,9 +158,19 @@ public class Catalogue extends HttpServlet {
         }
         else
         {
+           if(Status.equals("ok"))
+           {
             out.println("<tr><td> Bienvenue à vous "+session.getAttribute("User"));
             out.println("<br>Vous avez "+session.getAttribute("Ecus")+" Ecus");
             out.println("<tr><td><button id=\"btndeconnexion\" type=\"submit\" class=\"BTN_Deconnexion\">Se déconnecter</button></td></tr>");
+           }
+           if(Status.equals("error"))
+           {
+            out.println("<tr><td> Nom d'usager : </td><td> <input id=\"Username\" type=\"text\" class=\"Text_Box\" name=\"User\" /> </td></tr>");
+            out.println("<tr><td> Mot de passe : </td><td> <input id=\"Password\" type=\"password\" class=\"Text_Box\" name=\"Password\" /> </td></tr>");
+            out.println("<tr><td><button id=\"btnconnexion\" type=\"submit\" class=\"BTN_Connexion\">Se connecter</button></td></tr>");
+            out.println("<tr><td> Erreur de connexion , l'un des champs est invalide</td></tr>");
+           }
         }
         
     }

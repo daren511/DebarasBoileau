@@ -32,7 +32,6 @@ import oracle.jdbc.OracleTypes;
 public class Panier extends HttpServlet {
    private HttpSession session;
    private float Total;
-   Date date=new Date(2012,12,12);
    
    /**
     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

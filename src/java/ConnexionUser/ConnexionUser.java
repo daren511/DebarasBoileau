@@ -132,13 +132,11 @@ private void writeConnexionTB(PrintWriter out){
            {
               session.setAttribute("User", nomUser);
               session.setAttribute("Ecus", ecus);
-              response.sendRedirect("http://localhost:8084/DebarasBoileau/Catalogue");
+              response.sendRedirect("http://localhost:8084/DebarasBoileau/Catalogue?Status=ok");
            }
            else
            {
-              String st="L'un des champs est invalide";
-              JOptionPane.showMessageDialog(null, st);
-              response.sendRedirect("http://localhost:8084/DebarasBoileau/Catalogue");
+              response.sendRedirect("http://localhost:8084/DebarasBoileau/Catalogue?Status=error");
            }
            
    }
