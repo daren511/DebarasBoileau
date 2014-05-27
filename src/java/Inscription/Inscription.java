@@ -79,7 +79,7 @@ public class Inscription extends HttpServlet {
             ecrireTete(out,"Inscription");
             out.println("<body>");
             out.println("<div class=\"Inscription\">");
-            out.println("<img src='Images/titre1.png' height='115' width='420'/>");
+            out.println("<a href=/DebarasBoileau/Catalogue><img src='Images/titre1.png' height='115' width='420'/></a>");
             out.println("<p id=\"Form\"><strong><u>Inscription</u></strong> <br/> </p>");
             out.println("<form action=\"Inscription\" method=\"POST\">");
             out.println("<table id=\"T_Inscription\">");
@@ -93,10 +93,7 @@ public class Inscription extends HttpServlet {
             out.println("<tr><td> Prénom : </td><td> <input id=\"firstname\" type=\"text\" class=\"Text_Box\" name=\"Prenom\" /> </td></tr>");
             
             out.println("<tr><td colspan=\"2\"> <button id=\"btninscription\" type=\"submit\" class=\"BTN_Inscrire\">S'inscrire</button> </td></tr>");
-            
-            out.println("<tr><td><a href=\"/DebarasBoileau/Catalogue\"><img src='Images/Catalogue.png'  height='39' width='38'></a></td></tr>");
-            
-      
+                       
             out.println("<tr><td class='"+etat+"' colspan='2'>"+texte+"</td></tr>");
             out.println("</table>");
             out.println("</form>");

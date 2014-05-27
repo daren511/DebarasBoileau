@@ -73,7 +73,6 @@ public class Panier extends HttpServlet {
          out.println("<th>Prix</th>");
          out.println("<th>Disponible</th>");
          out.println("<th>Quantité</th>");
-         out.println("<th></th>");
          out.println("</tr>");
          listerPanier(out);
          out.println("</table>");
